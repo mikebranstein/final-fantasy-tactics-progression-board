@@ -111,6 +111,50 @@ function renderTile(charName, tile, index) {
       </label>`;
 }
 
+function renderLoadouts(character) {
+  if (!character.loadouts || !character.loadouts.length) return "";
+  const rows = character.loadouts
+    .map(
+      (lo) => `<div class="loadout-row">
+        <div class="loadout-job">${formatText(lo.job)}</div>
+        <div class="loadout-slots">
+          <div class="loadout-slot"><span class="loadout-tag t-action">2nd</span>${formatText(lo.secondary)}</div>
+          <div class="loadout-slot"><span class="loadout-tag t-reaction">React</span>${formatText(lo.reaction)}</div>
+          <div class="loadout-slot"><span class="loadout-tag t-support">Support</span>${formatText(lo.support)}</div>
+          <div class="loadout-slot"><span class="loadout-tag t-movement">Move</span>${formatText(lo.movement)}</div>
+        </div>
+        ${lo.why ? `<div class="loadout-why">${formatText(lo.why)}</div>` : ""}
+      </div>`
+    )
+    .join("\n      ");
+  return `<div class="loadout-block">
+      <h4>Ability load-out by job <span class="block-sub">— primary command is the job's own skillset; equip these in the other slots. Slots evolve top to bottom.</span></h4>
+      ${rows}
+    </div>`;
+}
+
+function renderGear(character) {
+  if (!character.gear || !character.gear.length) return "";
+  const items = character.gear
+    .map(
+      (g) => `<li class="gear-item">
+        <span class="gear-type gear-${escapeAttr(g.type)}">${escapeHtml(g.type)}</span>
+        <span class="gear-body">
+          <span class="gear-name">${formatText(g.name)}</span>
+          <span class="gear-when">${formatText(g.when)}</span>
+          <span class="gear-note">${formatText(g.note)}</span>
+        </span>
+      </li>`
+    )
+    .join("\n        ");
+  return `<div class="gear-block">
+      <h4>Special gear watchlist <span class="block-sub">— acquisition points are approximate; confirm exact timing in your version</span></h4>
+      <ul class="gear-list">
+        ${items}
+      </ul>
+    </div>`;
+}
+
 function renderCharacter(character, index) {
   const tiles = character.tiles
     .map((tile, i) => renderTile(character.name, tile, i))
@@ -140,6 +184,8 @@ function renderCharacter(character, index) {
         ${notes}
       </ul>
     </div>
+    ${renderLoadouts(character)}
+    ${renderGear(character)}
     <div class="char-reset">
       <button type="button" data-reset="${escapeAttr(character.name)}">Reset ${escapeHtml(character.name)}</button>
     </div>
