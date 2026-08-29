@@ -127,6 +127,10 @@ function renderCharacter(character, index) {
     </div>
     <div class="path-strip">${renderPath(character.name, character.path)}</div>
     <div class="baseline-note">${formatText(character.baseline)}</div>
+    <div class="char-progress">
+      <div class="char-progress-track"><div class="char-progress-fill"></div></div>
+      <div class="char-progress-label"></div>
+    </div>
     <div class="skill-grid">
       ${tiles}
     </div>
@@ -154,6 +158,45 @@ function updateTabProgress(charName) {
   }
 }
 
+function updateCharProgress(charName) {
+  const character = party.find((c) => c.name === charName);
+  if (!character) return;
+  const { done, total } = tileProgress(character);
+  const section = document.querySelector(`.character[data-char="${cssEscape(charName)}"]`);
+  if (!section) return;
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  section.querySelector(".char-progress-fill").style.width = pct + "%";
+  section.querySelector(".char-progress-label").textContent = `${done}/${total} skills learned`;
+}
+
+function updatePartyProgress() {
+  let done = 0;
+  let total = 0;
+  party.forEach((c) => {
+    const p = tileProgress(c);
+    done += p.done;
+    total += p.total;
+  });
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  document.getElementById("partyFill").style.width = pct + "%";
+  document.getElementById("partyLabel").textContent = `Party progress · ${done}/${total} skills learned`;
+}
+
+// Flag the first not-yet-learned skill for a character as the next target.
+function updateNextHighlight(charName) {
+  const section = document.querySelector(`.character[data-char="${cssEscape(charName)}"]`);
+  if (!section) return;
+  let found = false;
+  section.querySelectorAll(".tile").forEach((tile) => {
+    tile.classList.remove("next");
+    const cb = tile.querySelector(".tile-check");
+    if (!found && cb && !cb.checked) {
+      tile.classList.add("next");
+      found = true;
+    }
+  });
+}
+
 function setActive(charName) {
   activeChar = charName;
   localStorage.setItem(ACTIVE_KEY, charName);
@@ -169,6 +212,7 @@ function setActive(charName) {
 }
 
 function resetCharacter(charName) {
+  if (!window.confirm(`Reset all progress for ${charName}?`)) return;
   delete state[charName];
   saveState();
   document
@@ -178,6 +222,9 @@ function resetCharacter(charName) {
       cb.closest("[data-key]").classList.remove("done");
     });
   updateTabProgress(charName);
+  updateCharProgress(charName);
+  updatePartyProgress();
+  updateNextHighlight(charName);
 }
 
 // Minimal CSS.escape fallback for attribute selectors.
@@ -199,7 +246,12 @@ function wireEvents() {
     const label = cb.closest("[data-key]");
     setDone(label.dataset.char, label.dataset.key, cb.checked);
     label.classList.toggle("done", cb.checked);
-    if (cb.classList.contains("tile-check")) updateTabProgress(label.dataset.char);
+    if (cb.classList.contains("tile-check")) {
+      updateTabProgress(label.dataset.char);
+      updateCharProgress(label.dataset.char);
+      updatePartyProgress();
+      updateNextHighlight(label.dataset.char);
+    }
   });
 
   board.addEventListener("click", (e) => {
@@ -221,9 +273,22 @@ function renderBoard() {
 
   wireEvents();
 
+  party.forEach((c) => {
+    updateCharProgress(c.name);
+    updateNextHighlight(c.name);
+  });
+  updatePartyProgress();
+
   const initial =
     party.some((c) => c.name === activeChar) ? activeChar : party[0].name;
   setActive(initial);
 }
 
 document.addEventListener("DOMContentLoaded", renderBoard);
+
+// Register the service worker for offline use (only when served over http/https).
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}

@@ -375,3 +375,52 @@ footer{
   .char-meta{ margin-left: 0; width: 100%; }
 }
 
+/* ---------- Progress bars ---------- */
+.party-progress{ margin: 0 0 30px; }
+.char-progress{ margin: 0 0 22px; }
+.party-progress-track,
+.char-progress-track{
+  height: 8px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  overflow: hidden;
+}
+.party-progress-fill,
+.char-progress-fill{
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--gold-soft), var(--gold));
+  transition: width .25s ease;
+}
+.party-progress-label,
+.char-progress-label{
+  margin-top: 7px;
+  font-family:'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--parchment-dim);
+}
+
+/* ---------- Next-up skill highlight ---------- */
+.tile.next{
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold), 0 0 18px rgba(201,162,39,0.22);
+}
+.tile.next::after{
+  content: "NEXT";
+  position: absolute;
+  top: -9px;
+  left: 12px;
+  font-family:'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  background: var(--gold);
+  color: #171b28;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+

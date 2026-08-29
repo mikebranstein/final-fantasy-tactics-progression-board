@@ -11,6 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
 </head>
 <body>
 <div class="wrap">
@@ -22,6 +24,11 @@
   </header>
 
   <div class="legend" id="legend"></div>
+
+  <div class="party-progress">
+    <div class="party-progress-track"><div class="party-progress-fill" id="partyFill"></div></div>
+    <div class="party-progress-label" id="partyLabel"></div>
+  </div>
 
   <nav class="tabs" id="tabs" role="tablist" aria-label="Characters"></nav>
 
