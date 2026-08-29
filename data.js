@@ -532,6 +532,116 @@ const missables = [
   },
 ];
 
+// Rare poaching tracker. Poaching turns a slain monster into gear at the Fur Shop.
+// Exact monster→item pairs shift between versions — confirm in The Ivalice Chronicles.
+const poach = [
+  {
+    group: "How poaching works",
+    items: [
+      {
+        label: "Learn **Secret Hunt**",
+        note: "A **support** ability from the Mediator/Orator line. Equip it on whoever lands the killing blow — it only works on **monsters**, not humans.",
+      },
+      {
+        label: "Finish monsters with a **physical** attack",
+        note: "The poach fires on the killing blow. Magic and non-damage finishes don't poach — soften the monster, then let the poacher land the last hit.",
+      },
+      {
+        label: "Collect goods at the **Fur Shop**",
+        note: "Poached items don't drop on the field — they appear for sale (and resale) at the Fur Shop in town. Check it after farming.",
+      },
+      {
+        label: "Grab a poach list for your version",
+        note: "Which monster yields which item **varies by version** — keep an in-game or community poach chart handy before farming.",
+      },
+    ],
+  },
+  {
+    group: "Worthwhile targets (confirm exact drops in-game)",
+    items: [
+      {
+        label: "Dragon family",
+        note: "Commonly farmed for strong poach rewards. Exact item depends on the dragon type and version — verify before grinding.",
+      },
+      {
+        label: "Chocobo family (Yellow / Black / Red)",
+        note: "Easy, plentiful poach fodder in many regions. Good for early materials; confirm the current drop.",
+      },
+      {
+        label: "Great Malboro",
+        note: "A classic high-value poach target. Bring status protection and confirm the reward for your version.",
+      },
+      {
+        label: "Coeurl / Vampire cats",
+        note: "Late-game feline monsters known for desirable poaches — check the exact item in-game.",
+      },
+    ],
+  },
+];
+
+// Treasure Hunter / Move-Find Item tracker for hidden tiles on maps.
+const treasure = [
+  {
+    group: "How Move-Find Item works",
+    items: [
+      {
+        label: "Equip **Treasure Hunter** (Move-Find Item)",
+        note: "A **Move** ability. End a unit's movement on a hidden panel to dig up an item. Some panels only appear at map edges or specific tiles.",
+      },
+      {
+        label: "Raise **Brave** before you dig",
+        note: "Each panel gives a **rare** item at high Brave and a **common** one otherwise. Pump the digger's Brave first for the better roll.",
+      },
+      {
+        label: "One find per panel per battle",
+        note: "You can't re-farm the same tile in a single fight. For revisitable maps you can return; story-only maps are one-shot.",
+      },
+      {
+        label: "Grab a map/tile guide for your version",
+        note: "Which tile yields what — and the rare vs. common split — **varies by version**. Confirm with a Move-Find map before hunting.",
+      },
+    ],
+  },
+  {
+    group: "Don't-miss sweeps (confirm tiles in-game)",
+    items: [
+      {
+        label: "Sweep Nelveska Temple",
+        note: "The one-time Construct 8 map is worth a full Move-Find sweep before you leave — you won't get another pass.",
+      },
+      {
+        label: "Check story-only maps before advancing",
+        note: "Any map you can't revisit may hide a rare panel. If it's a one-time battle, sweep it while you're there.",
+      },
+    ],
+  },
+];
+
+// Shop and Fur Shop progression — FFT has no forging; gear improves by story tier, treasure, steals and poaches.
+const shop = [
+  {
+    group: "Keeping stock current",
+    items: [
+      {
+        label: "Re-check town shops each chapter",
+        note: "Base shops stock better weapons and armor as the story advances. Swing back through towns at each chapter to buy the new tier.",
+      },
+      {
+        label: "Watch the **Fur Shop** for poaches",
+        note: "Rare gear you can't buy anywhere else shows up here once you've poached it. It's the payoff for the poach tracker.",
+      },
+      {
+        label: "Re-equip fresh recruits on arrival",
+        note: "New units often join in outdated gear. Budget gil so an incoming recruit isn't fielded under-equipped.",
+      },
+      {
+        label: "Remember: there's no forging",
+        note: "Better gear comes from **shop tiers, treasure, steals, and poaches** — not upgrades. Plan gil and steals around the fights that matter.",
+      },
+    ],
+  },
+];
+
 // Optional special characters. Rendered as extra tabs after the core party.
 const recruits = [
   {

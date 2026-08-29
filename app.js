@@ -9,8 +9,10 @@
 const STORAGE_KEY = "fft-progress-v1";
 const ACTIVE_KEY = "fft-active-v1";
 const HIDE_KEY = "fft-hide-done-v1";
+const VIEW_KEY = "fft-view-v1";
 
-// Missable checklist items are stored under one synthetic character namespace.
+// Checklist items are stored under synthetic character namespaces so per-character
+// resets never touch them. Each checklist has its own namespace + key prefix.
 const MISS_CHAR = "__missables__";
 
 // ---------- Persistence ----------
@@ -282,50 +284,98 @@ function renderKeyBattles() {
 
 const missKey = (chapter, label) => "miss:" + chapter + "|" + label;
 
-function missablesProgress() {
+// ---------- Generic checklists (missables, poach, treasure, shop) ----------
+// Each dataset is an array of groups: { group|chapter, items:[{label, note}] }.
+function checklistKey(prefix, groupName, label) {
+  return prefix + groupName + "|" + label;
+}
+
+function checklistProgress(data, ns, prefix) {
   let done = 0;
   let total = 0;
-  (typeof missables === "undefined" ? [] : missables).forEach((g) => {
-    g.items.forEach((it) => {
+  (data || []).forEach((g) => {
+    (g.items || []).forEach((it) => {
       total++;
-      if (isDone(MISS_CHAR, missKey(g.chapter, it.label))) done++;
+      if (isDone(ns, checklistKey(prefix, g.group || g.chapter, it.label))) done++;
     });
   });
   return { done, total };
 }
 
-function renderMissables() {
-  if (typeof missables === "undefined") return "";
-  const groups = missables
+// opts: { ns, prefix, blockClass, title, sub, expanded }
+function renderChecklist(data, opts) {
+  if (typeof data === "undefined" || !data || !data.length) return "";
+  const groups = data
     .map((g) => {
+      const groupName = g.group || g.chapter;
       const items = g.items
         .map((it) => {
-          const key = missKey(g.chapter, it.label);
-          const done = isDone(MISS_CHAR, key);
-          return `<label class="miss-item${done ? " done" : ""}" data-key="${escapeAttr(key)}">
-          <input type="checkbox" class="miss-check"${done ? " checked" : ""}>
-          <span class="miss-body">
-            <span class="miss-label">${formatText(it.label)}</span>
-            <span class="miss-note">${formatText(it.note)}</span>
+          const key = checklistKey(opts.prefix, groupName, it.label);
+          const done = isDone(opts.ns, key);
+          return `<label class="chk-item${done ? " done" : ""}" data-ns="${escapeAttr(opts.ns)}" data-key="${escapeAttr(key)}">
+          <input type="checkbox" class="chk-check"${done ? " checked" : ""}>
+          <span class="chk-body">
+            <span class="chk-label">${formatText(it.label)}</span>
+            <span class="chk-note">${formatText(it.note)}</span>
           </span>
         </label>`;
         })
         .join("\n        ");
-      return `<div class="miss-group">
-        <h5>${escapeHtml(g.chapter)}</h5>
+      return `<div class="chk-group">
+        <h5>${escapeHtml(groupName)}</h5>
         ${items}
       </div>`;
     })
     .join("\n      ");
-  const { done, total } = missablesProgress();
-  const title = `Missables checklist <span class="miss-count" id="missCount">${done}/${total}</span>`;
+  const { done, total } = checklistProgress(data, opts.ns, opts.prefix);
+  const title = `${opts.title} <span class="chk-count">${done}/${total}</span>`;
   return collapsible(
-    "missables-block",
+    opts.blockClass,
     title,
-    "— one-time steals, recruits &amp; treasures; timing varies by version, confirm in-game",
+    opts.sub,
     groups,
-    false
+    opts.expanded ?? false
   );
+}
+
+function renderMissables() {
+  return renderChecklist(typeof missables === "undefined" ? null : missables, {
+    ns: MISS_CHAR,
+    prefix: "miss:",
+    blockClass: "missables-block",
+    title: "Missables checklist",
+    sub: "— one-time steals, recruits &amp; treasures; timing varies by version, confirm in-game",
+  });
+}
+
+function renderPoach() {
+  return renderChecklist(typeof poach === "undefined" ? null : poach, {
+    ns: "__poach__",
+    prefix: "poach:",
+    blockClass: "poach-block",
+    title: "Rare poaching tracker",
+    sub: "— Secret Hunt kills → Fur Shop gear; exact drops vary by version, confirm in-game",
+  });
+}
+
+function renderTreasure() {
+  return renderChecklist(typeof treasure === "undefined" ? null : treasure, {
+    ns: "__treasure__",
+    prefix: "treasure:",
+    blockClass: "treasure-block",
+    title: "Treasure Hunter map",
+    sub: "— Move-Find Item panels; rare vs common depends on Brave, tiles vary by version",
+  });
+}
+
+function renderShop() {
+  return renderChecklist(typeof shop === "undefined" ? null : shop, {
+    ns: "__shop__",
+    prefix: "shop:",
+    blockClass: "shop-block",
+    title: "Shop &amp; Fur Shop progression",
+    sub: "— no forging in FFT; gear comes from shop tiers, treasure, steals &amp; poaches",
+  });
 }
 
 function renderOverview() {
@@ -484,6 +534,32 @@ function cssEscape(value) {
   return window.CSS && CSS.escape ? CSS.escape(value) : value.replace(/"/g, '\\"');
 }
 
+// Recompute a checklist block's "done/total" badge from its own items.
+function updateChecklistCount(block) {
+  const count = block.querySelector(".chk-count");
+  if (!count) return;
+  const total = block.querySelectorAll(".chk-item").length;
+  const done = block.querySelectorAll(".chk-item.done").length;
+  count.textContent = `${done}/${total}`;
+}
+
+// Switch the top-level view (characters / guides / checklists).
+function setView(view) {
+  document.querySelectorAll(".view").forEach((v) => {
+    v.classList.toggle("active", v.id === "view-" + view);
+  });
+  document.querySelectorAll(".view-tab").forEach((b) => {
+    const on = b.dataset.view === view;
+    b.classList.toggle("active", on);
+    b.setAttribute("aria-selected", on ? "true" : "false");
+  });
+  localStorage.setItem(VIEW_KEY, view);
+  if (location.hash.slice(1) !== view) {
+    history.replaceState(null, "", "#" + view);
+  }
+  window.scrollTo(0, 0);
+}
+
 function wireEvents() {
   document.getElementById("tabs").addEventListener("click", (e) => {
     const tab = e.target.closest(".tab");
@@ -511,21 +587,22 @@ function wireEvents() {
     if (btn) resetCharacter(btn.dataset.reset);
   });
 
-  const missEl = document.getElementById("missables");
+  const missEl = document.getElementById("view-checklists");
   if (missEl) {
     missEl.addEventListener("change", (e) => {
       const cb = e.target;
-      if (!cb.matches(".miss-check")) return;
+      if (!cb.matches(".chk-check")) return;
       const label = cb.closest("[data-key]");
-      setDone(MISS_CHAR, label.dataset.key, cb.checked);
+      setDone(label.dataset.ns, label.dataset.key, cb.checked);
       label.classList.toggle("done", cb.checked);
-      const countEl = document.getElementById("missCount");
-      if (countEl) {
-        const { done, total } = missablesProgress();
-        countEl.textContent = `${done}/${total}`;
-      }
+      const block = cb.closest(".block");
+      if (block) updateChecklistCount(block);
     });
   }
+
+  document.querySelectorAll(".view-tab").forEach((btn) => {
+    btn.addEventListener("click", () => setView(btn.dataset.view));
+  });
 
   const hideToggle = document.getElementById("hideDone");
   if (hideToggle) {
@@ -561,6 +638,12 @@ function renderBoard() {
   if (battlesEl) battlesEl.innerHTML = renderKeyBattles();
   const missablesEl = document.getElementById("missables");
   if (missablesEl) missablesEl.innerHTML = renderMissables();
+  const poachEl = document.getElementById("poach");
+  if (poachEl) poachEl.innerHTML = renderPoach();
+  const treasureEl = document.getElementById("treasure");
+  if (treasureEl) treasureEl.innerHTML = renderTreasure();
+  const shopEl = document.getElementById("shop");
+  if (shopEl) shopEl.innerHTML = renderShop();
   document.getElementById("board").innerHTML = roster
     .map(renderCharacter)
     .join("\n\n  ");
@@ -576,6 +659,16 @@ function renderBoard() {
   const initial =
     roster.some((c) => c.name === activeChar) ? activeChar : roster[0].name;
   setActive(initial);
+
+  const validViews = ["characters", "guides", "checklists"];
+  const hashView = location.hash.slice(1);
+  const storedView = localStorage.getItem(VIEW_KEY);
+  const startView = validViews.includes(hashView)
+    ? hashView
+    : validViews.includes(storedView)
+      ? storedView
+      : "characters";
+  setView(startView);
 }
 
 document.addEventListener("DOMContentLoaded", renderBoard);

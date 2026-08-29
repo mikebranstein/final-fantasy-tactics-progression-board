@@ -23,28 +23,41 @@
     <p class="subtitle" id="subtitle"></p>
   </header>
 
-  <div class="legend" id="legend"></div>
+  <nav class="views" id="viewNav" aria-label="Sections">
+    <button class="view-tab" type="button" role="tab" data-view="characters" aria-selected="false">Characters</button>
+    <button class="view-tab" type="button" role="tab" data-view="guides" aria-selected="false">Guides</button>
+    <button class="view-tab" type="button" role="tab" data-view="checklists" aria-selected="false">Checklists</button>
+  </nav>
 
-  <div class="party-progress">
-    <div class="party-progress-track"><div class="party-progress-fill" id="partyFill"></div></div>
-    <div class="party-progress-label" id="partyLabel"></div>
+  <div class="view" id="view-characters">
+    <div class="legend" id="legend"></div>
+
+    <div class="party-progress">
+      <div class="party-progress-track"><div class="party-progress-fill" id="partyFill"></div></div>
+      <div class="party-progress-label" id="partyLabel"></div>
+    </div>
+
+    <div class="controls">
+      <label class="toggle"><input type="checkbox" id="hideDone"><span>Hide completed skills</span></label>
+    </div>
+
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Characters"></nav>
+
+    <div id="board"></div>
   </div>
 
-  <div class="controls">
-    <label class="toggle"><input type="checkbox" id="hideDone"><span>Hide completed skills</span></label>
+  <div class="view" id="view-guides">
+    <section id="overview" aria-label="Party strategy"></section>
+    <section id="timeline" aria-label="Party makeup over time"></section>
+    <section id="battles" aria-label="Key battles"></section>
   </div>
 
-  <section id="overview" aria-label="Party strategy"></section>
-
-  <section id="timeline" aria-label="Party makeup over time"></section>
-
-  <section id="battles" aria-label="Key battles"></section>
-
-  <section id="missables" aria-label="Missables checklist"></section>
-
-  <nav class="tabs" id="tabs" role="tablist" aria-label="Characters"></nav>
-
-  <div id="board"></div>
+  <div class="view" id="view-checklists">
+    <section id="missables" aria-label="Missables checklist"></section>
+    <section id="poach" aria-label="Rare poaching tracker"></section>
+    <section id="treasure" aria-label="Treasure Hunter map"></section>
+    <section id="shop" aria-label="Shop and Fur Shop progression"></section>
+  </div>
 
   <footer id="footer"></footer>
 

@@ -14,7 +14,8 @@ It's a Progressive Web App, so you can also add it to your phone's home screen a
 - **Checklists that stick** — check off learned skills and completed job-path steps; progress is saved to your browser's `localStorage`, with per-character and whole-party progress bars.
 - **Core party + recruits** — tabs for the main five plus optional special units (Agrias, Mustadio, Orlandeau, Beowulf, Reis, Construct 8, Cloud), each with acquisition timing and their own progression.
 - **Build guidance** — collapsible sections per character for ability load-outs by job, special gear to watch for, Brave/Faith advice, and story battles to prep for.
-- **Party planning panels** — a strategy overview, a **party makeup over time** timeline (how your deployed five changes each chapter), and a **key battles** list of fights that call for a specific unit or setup.
+- **Three top-level views** — the app is split into **Characters** (progression grids), **Guides** (strategy overview, **party makeup over time** timeline, and **key battles**), and **Checklists** (see below). The active view is remembered and deep-linkable via URL hash.
+- **Checklist trackers** — a **missables** checklist plus **rare poaching**, **Treasure Hunter (Move-Find Item)**, and **shop/Fur Shop** trackers; tick off one-time items as you collect them. Version-sensitive details are flagged "confirm in-game."
 - **Offline-first PWA** — a service worker caches the app so it works with no connection; installable to the home screen.
 - **No build step, no tracking** — plain HTML/CSS/JavaScript, everything stored locally.
 
@@ -37,9 +38,13 @@ All board content lives in [`data.js`](data.js) — you almost never need to tou
 | `site` | Page title, subtitle, and footer text. |
 | `types` | Legend labels for skill types (`action`, `support`, `reaction`, `movement`). |
 | `party` | The core characters: job path, baseline, skill `tiles`, notes, load-outs, gear, Brave/Faith, story warnings. |
-| `strategy` | The top-level strategy overview panel. |
-| `partyTimeline` | The "party makeup over time" panel. |
-| `keyBattles` | The "key battles — who to bring" panel. |
+| `strategy` | The strategy overview panel (Guides view). |
+| `partyTimeline` | The "party makeup over time" panel (Guides view). |
+| `keyBattles` | The "key battles — who to bring" panel (Guides view). |
+| `missables` | The missables checklist (Checklists view). |
+| `poach` | The rare poaching tracker (Checklists view). |
+| `treasure` | The Treasure Hunter / Move-Find Item tracker (Checklists view). |
+| `shop` | The shop & Fur Shop progression tracker (Checklists view). |
 | `recruits` | Optional special units, rendered as extra tabs. |
 
 Text fields support `**bold**` with double asterisks. All values are treated as plain text and HTML is escaped when rendered.
