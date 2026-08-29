@@ -2,7 +2,7 @@
  * Service worker: makes the board work offline once installed.
  * Bump CACHE when you change any cached asset to force an update.
  */
-const CACHE = "fft-board-v2";
+const CACHE = "fft-board-v3";
 const ASSETS = [
   "./",
   "index.html",
