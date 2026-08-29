@@ -811,4 +811,71 @@ footer{
 .kb-note{ margin: 0; font-size: 12px; color: var(--parchment-dim); line-height:1.6; }
 .kb-note b{ color: var(--parchment); }
 
+/* ---------- Controls (hide completed) ---------- */
+.controls{ display:flex; justify-content:flex-end; margin: 0 0 20px; }
+.toggle{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  cursor:pointer;
+  font-family:'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--parchment-dim);
+  user-select:none;
+}
+.toggle:hover{ color: var(--parchment); }
+.toggle input{ width: 15px; height: 15px; accent-color: var(--gold); cursor:pointer; }
+
+/* Hides learned skill tiles when the toggle is on. */
+.hide-done .tile.done{ display:none; }
+
+/* ---------- Missables checklist ---------- */
+#missables{ margin: 0 0 30px; }
+.missables-block{
+  padding: 16px 18px;
+  background: rgba(201,162,39,0.05);
+  border: 1px solid var(--panel-line);
+  border-left: 2px solid var(--gold);
+  border-radius: 8px;
+}
+.miss-count{
+  font-family:'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold-soft);
+}
+.miss-group{ padding: 12px 0; border-top: 1px solid var(--panel-line); }
+.miss-group:first-child{ border-top:none; padding-top: 2px; }
+.miss-group h5{
+  margin: 0 0 8px;
+  font-family:'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+}
+.miss-item{
+  display:flex;
+  gap: 10px;
+  align-items:flex-start;
+  padding: 9px 0;
+  cursor:pointer;
+}
+.miss-item + .miss-item{ border-top: 1px solid var(--panel-line); }
+.miss-check{
+  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  accent-color: var(--gold);
+  cursor:pointer;
+}
+.miss-body{ display:flex; flex-direction:column; gap: 3px; }
+.miss-label{ font-size: 12.5px; font-weight: 600; color: var(--parchment); line-height:1.4; }
+.miss-note{ font-size: 11.5px; color: var(--parchment-dim); line-height:1.5; }
+.miss-label b, .miss-note b{ color: var(--parchment); }
+.miss-item.done{ opacity: 0.66; }
+.miss-item.done .miss-label{ text-decoration: line-through; color: var(--parchment-dim); }
+
 

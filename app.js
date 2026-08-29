@@ -8,6 +8,10 @@
 
 const STORAGE_KEY = "fft-progress-v1";
 const ACTIVE_KEY = "fft-active-v1";
+const HIDE_KEY = "fft-hide-done-v1";
+
+// Missable checklist items are stored under one synthetic character namespace.
+const MISS_CHAR = "__missables__";
 
 // ---------- Persistence ----------
 function loadState() {
@@ -276,6 +280,54 @@ function renderKeyBattles() {
   );
 }
 
+const missKey = (chapter, label) => "miss:" + chapter + "|" + label;
+
+function missablesProgress() {
+  let done = 0;
+  let total = 0;
+  (typeof missables === "undefined" ? [] : missables).forEach((g) => {
+    g.items.forEach((it) => {
+      total++;
+      if (isDone(MISS_CHAR, missKey(g.chapter, it.label))) done++;
+    });
+  });
+  return { done, total };
+}
+
+function renderMissables() {
+  if (typeof missables === "undefined") return "";
+  const groups = missables
+    .map((g) => {
+      const items = g.items
+        .map((it) => {
+          const key = missKey(g.chapter, it.label);
+          const done = isDone(MISS_CHAR, key);
+          return `<label class="miss-item${done ? " done" : ""}" data-key="${escapeAttr(key)}">
+          <input type="checkbox" class="miss-check"${done ? " checked" : ""}>
+          <span class="miss-body">
+            <span class="miss-label">${formatText(it.label)}</span>
+            <span class="miss-note">${formatText(it.note)}</span>
+          </span>
+        </label>`;
+        })
+        .join("\n        ");
+      return `<div class="miss-group">
+        <h5>${escapeHtml(g.chapter)}</h5>
+        ${items}
+      </div>`;
+    })
+    .join("\n      ");
+  const { done, total } = missablesProgress();
+  const title = `Missables checklist <span class="miss-count" id="missCount">${done}/${total}</span>`;
+  return collapsible(
+    "missables-block",
+    title,
+    "— one-time steals, recruits &amp; treasures; timing varies by version, confirm in-game",
+    groups,
+    false
+  );
+}
+
 function renderOverview() {
   if (typeof strategy === "undefined") return "";
   const s = strategy;
@@ -459,6 +511,32 @@ function wireEvents() {
     if (btn) resetCharacter(btn.dataset.reset);
   });
 
+  const missEl = document.getElementById("missables");
+  if (missEl) {
+    missEl.addEventListener("change", (e) => {
+      const cb = e.target;
+      if (!cb.matches(".miss-check")) return;
+      const label = cb.closest("[data-key]");
+      setDone(MISS_CHAR, label.dataset.key, cb.checked);
+      label.classList.toggle("done", cb.checked);
+      const countEl = document.getElementById("missCount");
+      if (countEl) {
+        const { done, total } = missablesProgress();
+        countEl.textContent = `${done}/${total}`;
+      }
+    });
+  }
+
+  const hideToggle = document.getElementById("hideDone");
+  if (hideToggle) {
+    hideToggle.checked = localStorage.getItem(HIDE_KEY) === "1";
+    document.body.classList.toggle("hide-done", hideToggle.checked);
+    hideToggle.addEventListener("change", () => {
+      localStorage.setItem(HIDE_KEY, hideToggle.checked ? "1" : "0");
+      document.body.classList.toggle("hide-done", hideToggle.checked);
+    });
+  }
+
   // Collapse/expand any titled section (works in the board and the overview).
   document.addEventListener("click", (e) => {
     const toggle = e.target.closest(".block-toggle");
@@ -481,6 +559,8 @@ function renderBoard() {
   if (timelineEl) timelineEl.innerHTML = renderPartyTimeline();
   const battlesEl = document.getElementById("battles");
   if (battlesEl) battlesEl.innerHTML = renderKeyBattles();
+  const missablesEl = document.getElementById("missables");
+  if (missablesEl) missablesEl.innerHTML = renderMissables();
   document.getElementById("board").innerHTML = roster
     .map(renderCharacter)
     .join("\n\n  ");

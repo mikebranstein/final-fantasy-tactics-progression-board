@@ -468,6 +468,70 @@ const keyBattles = [
   },
 ];
 
+// One-time steals, recruits and treasures that are easy to lose forever.
+// Each item is checkable; exact timing varies by version — confirm in-game.
+const missables = [
+  {
+    chapter: "Chapter 1",
+    items: [
+      {
+        label: "Steal the Blood Sword from Gaffgarion",
+        note: "Drains HP equal to damage dealt — a huge early survivability boost. Put **Steal** on a Thief and take it before the fight ends.",
+      },
+    ],
+  },
+  {
+    chapter: "Chapters 2–3",
+    items: [
+      {
+        label: "Keep Mustadio in your roster",
+        note: "He's the key to the Ch.4 Goug machine sidequests (**Construct 8**, and eventually **Cloud**) — don't dismiss him.",
+      },
+      {
+        label: "Steal / poach as named enemies appear",
+        note: "Many enemy-only weapons and accessories are one-time **steals** or **poaches**. Bring those abilities to fights with bosses and their escorts.",
+      },
+    ],
+  },
+  {
+    chapter: "Chapter 4 — the big one",
+    items: [
+      {
+        label: "Steal the Genji set from Elmdore",
+        note: "Genji Armor/Helm/Shield are top-tier heavy gear — but Elmdore has **Safeguard**, so strip that first, then steal each piece before the battle ends.",
+      },
+      {
+        label: "Poach the Koga/Iga Knives and steal the Assassin's Dagger",
+        note: "From enemy ninjas — the pieces of Esdeline's endgame dual-wield kit.",
+      },
+      {
+        label: "Grab Chirijiraden at Nelveska Temple",
+        note: "The ultimate katana and Ramza's biggest Iaido nuke — a one-time map.",
+      },
+      {
+        label: "Recruit Beowulf & Reis (Goland Coal City)",
+        note: "One sidequest recruits **both** — clear it or lose both.",
+      },
+      {
+        label: "Build Construct 8 / Worker 8 (Goug)",
+        note: "The machine-city sidequest; requires Mustadio in the party.",
+      },
+      {
+        label: "Recruit Cloud (very late, optional)",
+        note: "Buy a flower in **Zarghidas** after the machine quest, and get the **Materia Blade** from a Ch.4 map — his Limits don't work without it.",
+      },
+      {
+        label: "Look up other optional recruits",
+        note: "**Rapha & Marach**, **Balthier** (War of the Lions / The Ivalice Chronicles), and **Byblos** — timing and steps vary by version.",
+      },
+      {
+        label: "Zodiark (bonus, learn-only)",
+        note: "The strongest summon is only learned by surviving an enemy's Zodiark — treat it as a lucky bonus, not a plan.",
+      },
+    ],
+  },
+];
+
 // Optional special characters. Rendered as extra tabs after the core party.
 const recruits = [
   {
