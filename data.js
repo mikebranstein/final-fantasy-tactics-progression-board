@@ -89,6 +89,12 @@ const party = [
       { name: "Grand Helm / Maximillian", type: "armor", when: "late game shops/treasure", note: "Best helm and heavy body armor for a frontline Samurai." },
       { name: "Sprint Shoes", type: "accessory", when: "mid game", note: "+1 Speed = more Iaido turns." },
     ],
+    braveFaith: "**Keep Brave high.** Ramza is your physical anchor, and his best endgame reaction — **Shirahadori** (Blade Grasp) — triggers more often the higher his Brave, which also raises physical damage. His Faith can sit in the middle; he doesn't lean on magick.",
+    storyWarnings: [
+      { when: "End of Ch.3 — Riovanes Castle (the Wiegraf duel)", note: "Ramza fights Wiegraf, then the demon Velius, **completely alone**. Before you enter, make sure he can survive solo: a strong weapon, heavy armour, a self-heal (Auto-Potion or Item), and Counter. Don't build the fight around your healers — they aren't there." },
+      { when: "Ch.3 — Riovanes rooftop", note: "Right after the duel, the assassins Celia and Lettie can inflict Death, Stop and other nasty status. Bring status protection and burst them down quickly." },
+      { when: "Ch.1 — vs Gaffgarion", note: "You can **steal the Blood Sword** from Gaffgarion here — a big early survivability boost, since it drains HP with every hit." },
+    ],
   },
   {
     name: "Orrick",
@@ -145,6 +151,12 @@ const party = [
       { name: "Holy Miter", type: "armor", when: "mid game", note: "Magick-boosting hat for casters." },
       { name: "Chantage", type: "accessory", when: "poach (female-only Perfume)", note: "Perpetual Reraise + Regen — Orrick is male, so use Reflect Ring or Defense Ring instead." },
       { name: "108 Gems / N-Kai Armlet", type: "accessory", when: "mid game", note: "Blocks common status attacks so your healer stays online." },
+    ],
+    braveFaith: "**Keep Faith high.** His healing scales with Magick Attack *and* Faith, so higher Faith means bigger Cures — but he also takes more magick damage, so keep him out of enemy spell range. Never let his *permanent* Faith reach 100, or he'll leave the party to join the Church.",
+    storyWarnings: [
+      { when: "End of Ch.3 — the Riovanes duel", note: "He can't help Ramza in the solo Wiegraf fight — that battle is Ramza alone, so don't rely on Orrick's healing to carry it." },
+      { when: "Ch.3 — Riovanes rooftop", note: "Enemies here hit with status and heavy magick; give him a White Robe and a status-blocking accessory so your healer stays online." },
+      { when: "Any boss that inflicts Silence", note: "Keep **Item** as his secondary so he can still revive with a Phoenix Down if his spells get sealed." },
     ],
   },
   {
@@ -203,6 +215,11 @@ const party = [
       { name: "Golden Hairpin", type: "armor", when: "mid game", note: "+MP hat to fuel back-to-back summons." },
       { name: "Sprint Shoes / Sage's Ring", type: "accessory", when: "mid game", note: "Speed for more casts; Sage's Ring / Japa Mala further boost magick." },
     ],
+    braveFaith: "**High Faith = maximum damage.** Her spells and summons hit harder the higher her Faith — but she also takes far more magick damage, so she's a glass cannon; keep her at the back. Watch the 100-Faith cap so she doesn't leave the party.",
+    storyWarnings: [
+      { when: "Ch.3 — Riovanes rooftop", note: "The assassins target fragile back-line units first — give her a status-blocking accessory (108 Gems) or keep her well out of reach for that fight." },
+      { when: "Fights with heavy enemy magick", note: "Her low magick defence really hurts here; lead with Golem or Carbuncle (Reflect) once she has them, and stay behind terrain." },
+    ],
   },
   {
     name: "Esdeline",
@@ -253,6 +270,12 @@ const party = [
       { name: "Vanish Mantle", type: "accessory", when: "poach (rare)", note: "Top evasion cloak; adds Transparent — pairs with her innate evasion + Reflexes." },
       { name: "Sprint Shoes / Germinas Boots", type: "accessory", when: "mid game", note: "Speed, or Move/Jump, for a fast mobile striker." },
       { name: "Thief Hat / Flash Hat", type: "armor", when: "mid game", note: "Speed-boosting light headgear for Thief/Ninja." },
+    ],
+    braveFaith: "**Keep Brave high.** As a physical striker her damage rises with Brave, and her **Reflexes** evasion (and any Counter) triggers more often at high Brave. Keep her Faith on the lower side so enemy magick does less to her.",
+    storyWarnings: [
+      { when: "Ch.3 — Riovanes rooftop", note: "This is her moment: she's fast enough to reach and delete the assassins before they wreck your casters." },
+      { when: "Ch.4 — vs Elmdore", note: "He carries the **Genji gear** — steal it before the battle ends, but he has Safeguard, so strip that first." },
+      { when: "Ch.4 — enemy ninjas", note: "Poach or steal **Koga/Iga Knives** and the **Assassin's Dagger** from enemy ninjas to build her endgame dual-wield kit." },
     ],
   },
   {
@@ -310,5 +333,203 @@ const party = [
       { name: "Sage's Ring / Japa Mala", type: "accessory", when: "late game", note: "Boost magick attack for stronger calculations." },
       { name: "Sprint Shoes", type: "accessory", when: "mid game", note: "+1 Speed = noticeably more Arithmeticks turns." },
     ],
+    braveFaith: "**High Faith powers her calculations.** Arithmeticks damage scales with Faith just like normal spells, so keep her Faith high — but that also makes enemy magick hurt more, and she's fragile, so keep her protected. Mind the 100-Faith cap.",
+    storyWarnings: [
+      { when: "The long grind", note: "She's a background project — under-levelled and squishy for a long time. Bench her from the hardest story fights (like Riovanes) until her spell list and job levels are built up." },
+      { when: "Before you switch her to Arithmetician", note: "Make sure she has actually **learned** Holy, Flare, the -aga elementals, Death and Haste on other jobs first — Arithmeticks can only fire spells she already knows." },
+    ],
+  },
+];
+
+// Top-level party strategy shown in the collapsible overview panel.
+const strategy = {
+  formation: [
+    "**Front line (soak hits, deal melee damage):** Ramza and Esdeline. Ramza tanks in heavy armour with Shirahadori/Counter; Esdeline dives in with Dual Wield and high evasion.",
+    "**Back line (fragile, high value):** Margery and Felice. Keep them behind terrain or allies — one turn caught in the open can delete them.",
+    "**Flexible support:** Orrick sits mid-field, close enough to heal the front line but out of the enemy's spell range.",
+  ],
+  turnOrder:
+    "Speed sets turn order, so cast **Haste** (Orrick or Margery) on Ramza and Esdeline early — extra physical turns win fights — and drop **Slow** or **Stop** on the enemy's fastest, most dangerous unit.",
+  protectCasters:
+    "Actively shield your casters: **Golem** (Margery) soaks physical damage for the whole party, **Carbuncle/Reflect** bounces enemy magick back, and Esdeline can body-block chokepoints so nothing reaches the back line.",
+  faithBrave:
+    "**Brave** raises physical damage and how often reactions like Shirahadori, Counter and Reflexes trigger — keep it high on Ramza and Esdeline. **Faith** raises the magick you deal *and* the magick you take — keep it high on Orrick, Margery and Felice. Never let a unit's *permanent* Faith reach 100 (they leave to join the Church) or *permanent* Brave reach 0 (they run away for good).",
+  poaching:
+    "Gear tagged **(poach)** comes from the Thief's **Poach** support ability — equip it on **Esdeline**, then defeat a monster with a normal attack while Poach is on to take its item instead of a clean kill. Stronger members of a monster family yield rarer items. The exact monster-to-item pairs vary, so check a poaching chart in your version to target the pieces you want. *(Poach pairings are unverified against The Ivalice Chronicles.)*",
+  otherRecruits:
+    "Other optional recruits worth looking up (timing and skills vary — confirm in your version): **Rapha & Marach** (Sky/Nether Seers, Ch.4), **Balthier** the sky pirate (added in War of the Lions / The Ivalice Chronicles, Ch.4), and **Byblos** (a Goug / Deep Dungeon unit).",
+  caveat:
+    "Recruit join points and some ability names below come from general Final Fantasy Tactics / War of the Lions knowledge and aren't individually verified against The Ivalice Chronicles — confirm exact timing in-game.",
+};
+
+// Optional special characters. Rendered as extra tabs after the core party.
+const recruits = [
+  {
+    name: "Agrias",
+    recruit: true,
+    acquisition:
+      "**Joins in Ch.2** — she guards Princess Ovelia as a guest, then becomes a permanent party member after the Chapter 2 (Lionel) events. One of your earliest and most reliable special units.",
+    meta: "Holy Knight · **Holy Sword** — ranged holy sword-waves",
+    path: [{ label: "Holy Knight (fixed class)", now: true }],
+    baseline:
+      "**Signature:** her Holy Sword skills fire a sword-wave in a line, hitting at range and ignoring normal evasion — great for chipping distant or dodgy enemies.",
+    tiles: [
+      { type: "action", job: "Holy Knight", skill: "Stasis Sword", note: "Ranged sword-wave — reliable early damage" },
+      { type: "action", job: "Holy Knight", skill: "Split Punch", note: "Ranged hit with a chance to Stop" },
+      { type: "action", job: "Holy Knight", skill: "Crush Punch", note: "Ranged hit with a chance to inflict Death" },
+      { type: "action", job: "Holy Knight", skill: "Lightning Stab", note: "Wider ranged sword-wave" },
+      { type: "action", job: "Holy Knight", skill: "Holy Explosion", note: "Her strongest Holy Sword — a big holy burst" },
+    ],
+    notes: [
+      "Give her the strongest Knight's Sword you can — Holy Sword damage scales with weapon power and her physical stats.",
+      "She slots in as a second front-line bruiser next to Ramza; a physical support like Attack Boost suits her.",
+      "Her skills are Holy-element: excellent versus undead, but anything that absorbs Holy will heal from them.",
+    ],
+    gear: [
+      { name: "Save the Queen", type: "weapon", when: "Ch.4 (Beowulf sidequest)", note: "Knight's Sword granting permanent Protect — excellent on her." },
+      { name: "Excalibur", type: "weapon", when: "Ch.4", note: "Permanent Haste plus a Holy boost — arguably her best blade." },
+      { name: "Grand Armor / Genji Armor", type: "armor", when: "late game", note: "Top heavy armour for a front-line Holy Knight." },
+    ],
+    braveFaith:
+      "**Keep Brave high** — she's a physical attacker whose damage and reactions scale with Brave. Faith can stay moderate.",
+  },
+  {
+    name: "Mustadio",
+    recruit: true,
+    acquisition:
+      "**Joins in Ch.2** after the events in the clockwork city of Goug. A long-range gunner whose shots disable enemies.",
+    meta: "Machinist · **Aim/Snipe** — status-inflicting gunshots",
+    path: [{ label: "Machinist (fixed class)", now: true }],
+    baseline:
+      "**Signature:** guns fire at long range for fixed damage that ignores evasion, and his targeted shots shut enemies down.",
+    tiles: [
+      { type: "action", job: "Machinist", skill: "Leg Aim", note: "Ranged shot that inflicts Immobilize (can't move)" },
+      { type: "action", job: "Machinist", skill: "Arm Aim", note: "Ranged shot that inflicts Disable (can't act)" },
+      { type: "action", job: "Machinist", skill: "Seal Evil", note: "Petrifies undead enemies outright" },
+    ],
+    notes: [
+      "Leg Aim plus Arm Aim let you lock down a dangerous enemy from a safe distance — excellent control.",
+      "Guns deal fixed damage at long range and ignore evasion, so he's reliable against dodgy foes.",
+      "He's also the key to the Goug machine sidequests (Construct 8 and, eventually, Cloud).",
+    ],
+    gear: [
+      { name: "Blaze Gun / Glacier Gun / Blast Gun", type: "weapon", when: "mid–late game", note: "Elemental guns fire a fixed-power elemental shot at long range." },
+      { name: "Status-blocking accessory", type: "accessory", when: "mid game", note: "Keeps him acting freely from the back line." },
+    ],
+    braveFaith: "**Keep Brave high** for gun damage and reaction rate; his shots don't use Faith.",
+  },
+  {
+    name: "Orlandeau",
+    recruit: true,
+    acquisition:
+      "**Joins in Ch.4.** Cidolfus Orlandeau — the 'Thunder God' — arrives with almost every sword skill in the game already learned, and is widely considered the strongest unit in FFT.",
+    meta: "Sword Saint · **all sword skills** (Holy Sword + Dark Sword)",
+    path: [{ label: "Sword Saint (fixed class)", now: true }],
+    baseline:
+      "**Signature:** he combines Agrias's ranged Holy Sword with HP/MP-draining Dark Sword — enormous range, damage and self-sustain from the moment he joins.",
+    tiles: [
+      { type: "action", job: "Sword Saint", skill: "Night Sword", note: "Ranged sword-wave that drains HP to him — huge sustain" },
+      { type: "action", job: "Sword Saint", skill: "Dark Sword", note: "Ranged hit that drains the target's MP" },
+      { type: "action", job: "Sword Saint", skill: "Holy Explosion", note: "Big ranged holy burst from the Holy Sword set" },
+      { type: "action", job: "Sword Saint", skill: "Lightning Stab", note: "Wide ranged sword-wave for multi-hits" },
+    ],
+    notes: [
+      "He barely needs a build — hand him Excalibur or a strong Knight's Sword and he carries fights by himself.",
+      "Night Sword makes him nearly unkillable: he heals for the damage he deals, at range.",
+      "If you want a challenge, some players bench him precisely because he's so dominant.",
+    ],
+    gear: [
+      { name: "Excalibur", type: "weapon", when: "Ch.4", note: "Permanent Haste and a Holy boost — his signature blade." },
+      { name: "Grand Armor / Genji set", type: "armor", when: "late game", note: "Top heavy gear, though he rarely needs the bulk." },
+    ],
+    braveFaith:
+      "**Keep Brave high** — his sword skills are physical, so Brave maximises damage. Faith is a non-issue for him.",
+  },
+  {
+    name: "Beowulf",
+    recruit: true,
+    acquisition:
+      "**Joins in a Ch.4 sidequest** (the Goland Coal City questline, alongside Reis). A Temple Knight who inflicts status ailments with sword magick at range.",
+    meta: "Temple Knight · **Magick Sword** — ranged status infliction",
+    path: [{ label: "Temple Knight (fixed class)", now: true }],
+    baseline:
+      "**Signature:** ranged sword spells that inflict Silence, Sleep, Confuse, Petrify and worse — a control specialist with high success rates.",
+    tiles: [
+      { type: "action", job: "Temple Knight", skill: "Sleep (sword magick)", note: "Puts an enemy to sleep at range" },
+      { type: "action", job: "Temple Knight", skill: "Silence / Blind", note: "Shuts down casters and lowers enemy hit rates" },
+      { type: "action", job: "Temple Knight", skill: "Confuse / Petrify", note: "Hard control — remove a dangerous enemy from the fight" },
+      { type: "action", job: "Temple Knight", skill: "Spell Absorb / Life Drain", note: "Drain MP/HP from range for sustain" },
+    ],
+    notes: [
+      "Use him to disable the enemy's scariest units before they get a turn.",
+      "His status spells reach out at range and land reliably — great against a boss's escorts.",
+      "Reis joins from the same sidequest, so finish it to get both.",
+      "*Unverified:* exact Magick Sword ability names may differ in The Ivalice Chronicles — confirm in-game.",
+    ],
+    braveFaith:
+      "Higher Faith improves his status-spell success and magickal range damage — keep it moderate-to-high, but mind the 100 cap.",
+  },
+  {
+    name: "Reis",
+    recruit: true,
+    acquisition:
+      "**Joins from the same Ch.4 sidequest as Beowulf.** She starts as a Holy Dragon and becomes a human **Dragoner** once the questline completes.",
+    meta: "Dragoner · dragon breath + party buffs",
+    path: [{ label: "Holy Dragon → Dragoner (fixed)", now: true }],
+    baseline:
+      "**Signature:** elemental dragon-breath attacks plus strong party buffs like Reraise and stat boosts.",
+    tiles: [
+      { type: "action", job: "Dragoner", skill: "Dragon breath (Fire/Ice/Thunder)", note: "Elemental area breath attacks" },
+      { type: "action", job: "Dragoner", skill: "Dragon Spirit", note: "Grants Reraise (auto-revive) to an ally" },
+      { type: "support", job: "Dragoner", skill: "Dragon-power buffs", note: "Boosts allies' offence and defence" },
+    ],
+    notes: [
+      "A hybrid attacker/support — her buffs, especially Reraise, shine in long fights.",
+      "*Unverified:* her exact ability list in The Ivalice Chronicles — confirm in-game.",
+    ],
+    braveFaith: "Keep Faith moderate so her magickal breath hits without leaving her too fragile.",
+  },
+  {
+    name: "Construct 8",
+    recruit: true,
+    acquisition:
+      "**Built in the Ch.4 Goug sidequest** (needs Mustadio and the machine-city questline). A mechanical unit with high HP and heavy physical hits — also known as Worker 8.",
+    meta: "Automaton · high HP, physical hits — immune to most status",
+    path: [{ label: "Steel Giant (fixed — no jobs)", now: true }],
+    baseline:
+      "**Signature:** a robot. It can't learn jobs or earn JP, but it has big HP, hits hard, and ignores most status effects.",
+    tiles: [
+      { type: "action", job: "Automaton", skill: "Compress / Destroy", note: "Heavy mechanical melee attacks" },
+      { type: "reaction", job: "Automaton", skill: "Fixed innate kit", note: "It comes with its abilities — there's no JP to spend" },
+    ],
+    notes: [
+      "It **can't be healed by White Magic** the normal way — repair it with items/Potions instead.",
+      "No Brave or Faith to manage — a low-maintenance bruiser for a good while.",
+      "It can't grow, so it falls off against high-tier late enemies, but it's strong when you first get it.",
+    ],
+    braveFaith: "Not applicable — as a machine it ignores Brave/Faith and shrugs off most status.",
+  },
+  {
+    name: "Cloud",
+    recruit: true,
+    acquisition:
+      "**Ch.4 hidden sidequest (very late, fully optional).** Finish the Goug machine questline, then buy a flower from the girl in **Zarghidas**; Cloud appears afterward. He needs the **Materia Blade** (found on a Ch.4 map) before his Limits are usable.",
+    meta: "Soldier · **Limit** — huge damage, long charge times",
+    path: [{ label: "Soldier (fixed class)", now: true }],
+    baseline:
+      "**Signature:** Final Fantasy VII Limit Breaks — enormous damage, but every Limit has a long charge time and whiffs without the Materia Blade equipped.",
+    tiles: [
+      { type: "action", job: "Soldier", skill: "Braver", note: "First Limit — single-target burst" },
+      { type: "action", job: "Soldier", skill: "Cross-Slash / Blade Beam", note: "Bigger hits as you spend JP" },
+      { type: "action", job: "Soldier", skill: "Climhazzard / Meteorain", note: "High-damage area Limits" },
+      { type: "action", job: "Soldier", skill: "Finishing Touch / Omnislash", note: "Top-tier Limits — devastating but slow to charge" },
+    ],
+    notes: [
+      "**Get the Materia Blade first** — without it his Limits miss almost every time.",
+      "Pair him with **Haste** and **Swiftspell** to offset the brutal charge times.",
+      "He arrives so late he's really a fun bonus unit rather than a core pick.",
+    ],
+    braveFaith:
+      "**Keep Brave high** — his Limits are physical and scale with Brave. Faith is irrelevant to them.",
   },
 ];

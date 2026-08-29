@@ -23,6 +23,10 @@ function saveState() {
 let state = loadState();
 let activeChar = localStorage.getItem(ACTIVE_KEY);
 
+// Core party plus optional recruits, combined for tabs/board rendering.
+const recruitList = typeof recruits === "undefined" ? [] : recruits;
+const roster = party.concat(recruitList);
+
 const tileKey = (skill) => "tile:" + skill;
 const pathKey = (label) => "path:" + label;
 
@@ -70,17 +74,22 @@ function renderLegend() {
     .join("\n    ");
 }
 
-function renderTabs() {
-  return party
-    .map((character) => {
-      const { done, total } = tileProgress(character);
-      const complete = done === total ? " complete" : "";
-      return `<button class="tab${complete}" role="tab" data-char="${escapeAttr(character.name)}" aria-selected="false">
-      ${escapeHtml(character.name)}
+function tabButton(character) {
+  const { done, total } = tileProgress(character);
+  const complete = done === total ? " complete" : "";
+  const recruit = character.recruit ? " tab-recruit" : "";
+  const prefix = character.recruit ? "+ " : "";
+  return `<button class="tab${complete}${recruit}" role="tab" data-char="${escapeAttr(character.name)}" aria-selected="false">
+      ${prefix}${escapeHtml(character.name)}
       <span class="tab-progress">${done}/${total}</span>
     </button>`;
-    })
-    .join("\n    ");
+}
+
+function renderTabs() {
+  const core = party.map(tabButton).join("\n    ");
+  const recs = recruitList.map(tabButton).join("\n    ");
+  if (!recs) return core;
+  return `${core}\n    <span class="tab-divider" aria-hidden="true">Recruits</span>\n    ${recs}`;
 }
 
 function renderPath(charName, path) {
@@ -111,6 +120,19 @@ function renderTile(charName, tile, index) {
       </label>`;
 }
 
+// Wraps a titled section so its body can be collapsed by clicking the header.
+function collapsible(blockClass, title, sub, bodyHtml, expanded = true) {
+  if (!bodyHtml) return "";
+  const subHtml = sub ? ` <span class="block-sub">${sub}</span>` : "";
+  return `<div class="block ${blockClass}">
+      <button type="button" class="block-toggle" aria-expanded="${expanded ? "true" : "false"}">
+        <span class="block-h">${title}${subHtml}</span>
+        <span class="chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="block-body">${bodyHtml}</div>
+    </div>`;
+}
+
 function renderLoadouts(character) {
   if (!character.loadouts || !character.loadouts.length) return "";
   const rows = character.loadouts
@@ -127,10 +149,9 @@ function renderLoadouts(character) {
       </div>`
     )
     .join("\n      ");
-  return `<div class="loadout-block">
-      <h4>Ability load-out by job <span class="block-sub">— primary command is the job's own skillset; equip these in the other slots. Slots evolve top to bottom.</span></h4>
-      ${rows}
-    </div>`;
+  const sub =
+    "— primary command is the job's own skillset; equip these in the other slots. Slots evolve top to bottom.";
+  return collapsible("loadout-block", "Ability load-out by job", sub, rows);
 }
 
 function renderGear(character) {
@@ -147,12 +168,73 @@ function renderGear(character) {
       </li>`
     )
     .join("\n        ");
-  return `<div class="gear-block">
-      <h4>Special gear watchlist <span class="block-sub">— acquisition points are approximate; confirm exact timing in your version</span></h4>
-      <ul class="gear-list">
-        ${items}
-      </ul>
-    </div>`;
+  const sub =
+    "— acquisition points are approximate; confirm exact timing in your version";
+  return collapsible(
+    "gear-block",
+    "Special gear watchlist",
+    sub,
+    `<ul class="gear-list">\n        ${items}\n      </ul>`
+  );
+}
+
+function renderBraveFaith(character) {
+  if (!character.braveFaith) return "";
+  return collapsible(
+    "bf-block",
+    "Brave &amp; Faith",
+    "",
+    `<p class="bf-text">${formatText(character.braveFaith)}</p>`
+  );
+}
+
+function renderStoryWarnings(character) {
+  if (!character.storyWarnings || !character.storyWarnings.length) return "";
+  const items = character.storyWarnings
+    .map(
+      (w) => `<li class="story-item">
+        <span class="story-when">${formatText(w.when)}</span>
+        <span class="story-note">${formatText(w.note)}</span>
+      </li>`
+    )
+    .join("\n        ");
+  return collapsible(
+    "story-block",
+    "Story battles to prep for",
+    "",
+    `<ul class="story-list">\n        ${items}\n      </ul>`
+  );
+}
+
+function renderAcquisition(character) {
+  if (!character.acquisition) return "";
+  return `<div class="acq-banner"><span class="acq-tag">Recruit</span><span class="acq-text">${formatText(character.acquisition)}</span></div>`;
+}
+
+function renderOverview() {
+  if (typeof strategy === "undefined") return "";
+  const s = strategy;
+  const parts = [];
+  const formation = (s.formation || [])
+    .map((line) => `<li>${formatText(line)}</li>`)
+    .join("\n        ");
+  if (formation)
+    parts.push(`<h5>Formation</h5><ul class="ov-list">\n        ${formation}\n      </ul>`);
+  if (s.turnOrder) parts.push(`<h5>Turn order</h5><p>${formatText(s.turnOrder)}</p>`);
+  if (s.protectCasters)
+    parts.push(`<h5>Protecting your casters</h5><p>${formatText(s.protectCasters)}</p>`);
+  if (s.faithBrave) parts.push(`<h5>Brave &amp; Faith</h5><p>${formatText(s.faithBrave)}</p>`);
+  if (s.poaching) parts.push(`<h5>Poaching gear</h5><p>${formatText(s.poaching)}</p>`);
+  if (s.otherRecruits)
+    parts.push(`<h5>Other recruits</h5><p>${formatText(s.otherRecruits)}</p>`);
+  if (s.caveat) parts.push(`<p class="ov-caveat">${formatText(s.caveat)}</p>`);
+  return collapsible(
+    "overview-block",
+    "Party strategy &amp; recruits",
+    "— formation, Brave/Faith, poaching, optional units",
+    parts.join("\n      "),
+    false
+  );
 }
 
 function renderCharacter(character, index) {
@@ -162,13 +244,22 @@ function renderCharacter(character, index) {
   const notes = character.notes
     .map((note) => `<li>${formatText(note)}</li>`)
     .join("\n        ");
+  const notesBlock = collapsible(
+    "notes-block",
+    "Notes",
+    "",
+    `<ul>\n        ${notes}\n      </ul>`
+  );
+  const recruitClass = character.recruit ? " is-recruit" : "";
+  const badge = character.recruit ? `<span class="char-badge">Recruit</span>` : "";
 
-  return `<section class="character" data-char="${escapeAttr(character.name)}" role="tabpanel">
+  return `<section class="character${recruitClass}" data-char="${escapeAttr(character.name)}" role="tabpanel">
     <div class="char-head">
       <div class="char-index">${index + 1}</div>
-      <div class="char-name">${escapeHtml(character.name)}</div>
+      <div class="char-name">${escapeHtml(character.name)}${badge}</div>
       <div class="char-meta">${formatText(character.meta)}</div>
     </div>
+    ${renderAcquisition(character)}
     <div class="path-strip">${renderPath(character.name, character.path)}</div>
     <div class="baseline-note">${formatText(character.baseline)}</div>
     <div class="char-progress">
@@ -178,14 +269,11 @@ function renderCharacter(character, index) {
     <div class="skill-grid">
       ${tiles}
     </div>
-    <div class="notes-block">
-      <h4>Notes</h4>
-      <ul>
-        ${notes}
-      </ul>
-    </div>
+    ${notesBlock}
     ${renderLoadouts(character)}
     ${renderGear(character)}
+    ${renderBraveFaith(character)}
+    ${renderStoryWarnings(character)}
     <div class="char-reset">
       <button type="button" data-reset="${escapeAttr(character.name)}">Reset ${escapeHtml(character.name)}</button>
     </div>
@@ -194,7 +282,7 @@ function renderCharacter(character, index) {
 
 // ---------- Interactivity ----------
 function updateTabProgress(charName) {
-  const character = party.find((c) => c.name === charName);
+  const character = roster.find((c) => c.name === charName);
   if (!character) return;
   const { done, total } = tileProgress(character);
   const tab = document.querySelector(`.tab[data-char="${cssEscape(charName)}"]`);
@@ -205,7 +293,7 @@ function updateTabProgress(charName) {
 }
 
 function updateCharProgress(charName) {
-  const character = party.find((c) => c.name === charName);
+  const character = roster.find((c) => c.name === charName);
   if (!character) return;
   const { done, total } = tileProgress(character);
   const section = document.querySelector(`.character[data-char="${cssEscape(charName)}"]`);
@@ -304,6 +392,14 @@ function wireEvents() {
     const btn = e.target.closest("[data-reset]");
     if (btn) resetCharacter(btn.dataset.reset);
   });
+
+  // Collapse/expand any titled section (works in the board and the overview).
+  document.addEventListener("click", (e) => {
+    const toggle = e.target.closest(".block-toggle");
+    if (!toggle) return;
+    const expanded = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", expanded ? "false" : "true");
+  });
 }
 
 function renderBoard() {
@@ -313,20 +409,22 @@ function renderBoard() {
   document.getElementById("footer").textContent = site.footer;
   document.getElementById("legend").innerHTML = renderLegend();
   document.getElementById("tabs").innerHTML = renderTabs();
-  document.getElementById("board").innerHTML = party
+  const overviewEl = document.getElementById("overview");
+  if (overviewEl) overviewEl.innerHTML = renderOverview();
+  document.getElementById("board").innerHTML = roster
     .map(renderCharacter)
     .join("\n\n  ");
 
   wireEvents();
 
-  party.forEach((c) => {
+  roster.forEach((c) => {
     updateCharProgress(c.name);
     updateNextHighlight(c.name);
   });
   updatePartyProgress();
 
   const initial =
-    party.some((c) => c.name === activeChar) ? activeChar : party[0].name;
+    roster.some((c) => c.name === activeChar) ? activeChar : roster[0].name;
   setActive(initial);
 }
 
