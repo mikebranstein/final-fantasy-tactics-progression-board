@@ -200,6 +200,7 @@ const party = [
       "**Endgame identity:** nuke + turn-order control — finish Time Mage (Stop/Quick) while building Summoner AoE.",
       "**Fragility warning:** she'll be a priority kill target — lean on Golem, Carbuncle (Reflect), and Halve MP to keep her casting.",
       "Aspirational: **Zodiark** is the strongest summon but is learn-only — you must survive an enemy's Zodiark to acquire it, so treat it as a bonus, not a plan.",
+      "**Roster shift:** Margery stays your main nuker, but on status-heavy maps **Beowulf** (Ch.4) can take a caster slot for hard control (Sleep, Confuse, Petrify).",
     ],
     loadouts: [
       { job: "Black Mage (early)", secondary: "Item (heal / revive the party)", reaction: "None yet — she learns Critical: Recover MP later, as a Summoner", support: "Magick Boost — +33% to her spell and summon damage", movement: "Move +1", why: "A straight elemental nuker; Magick Boost raises her damage right away." },
@@ -256,6 +257,7 @@ const party = [
       "**Endgame identity:** fastest, hardest-hitting physical unit — Thief for Move +2/Steal, then Ninja for Dual Wield.",
       "Carry **Concentration** (already learned on Archer) as her support so dual-wield attacks don't miss.",
       "For an evasion tank, stack **Reflexes** (Ninja) with a cloak; adding the Samurai's **Shirahadori** later makes her nearly untouchable, though that's a deep detour.",
+      "**Roster shift:** Keep Esdeline in the party for her irreplaceable Steal/Poach, but for fights that reward disabling a boss at range, **Mustadio** (Ch.2) can take her slot for that battle.",
     ],
     loadouts: [
       { job: "Archer (early)", secondary: "Item", reaction: "None yet — she learns Vigilance later, as a Thief", support: "Concentration — makes her shots ignore evasion so they always land", movement: "Move +1", why: "Concentration guarantees hits while you build up her Charge/Aim skills." },
@@ -319,6 +321,7 @@ const party = [
       "**Critical:** Arithmeticks only triggers spells she has ALREADY learned on other jobs — her endgame power scales with how deep her learned spell list is before she reaches Arithmetician.",
       "Best Arithmeticks payloads to bank during the WM5/BM5/TM4/Mystic4 grind: Holy, Flare, Firaga-tier elementals, Death, Haste, and lockdown status (Immobilize, Repose/Quiescence) — learn them on the way. Note: tier-4 -ja spells and Meteor are NOT Arithmeticks-eligible.",
       "Note: Arithmeticks fires spells with **no MP cost and no charge time**, but hits every unit (allies included) matching the chosen algorithm — watch friendly fire, or use element-absorbing gear to turn it into healing.",
+      "**Roster shift:** From Ch.2 onward, **Agrias** usually takes your fifth deployment slot while Felice is still leveling — Agrias hits far harder in the short term. Rotate Felice back in once her Arithmeticks spell list is built, or for maps where calculated spells dominate.",
     ],
     loadouts: [
       { job: "Mage grind (WM/BM/TM/Mystic)", secondary: "Whichever magick set she isn't currently in, so she keeps casting while leveling", reaction: "Auto-Potion — automatically drinks a Potion when she takes damage", support: "Magick Boost — +33% magick damage, which later boosts her Arithmeticks spells too", movement: "Move +1", why: "She is fragile for a long time, so keep Auto-Potion on and keep her behind the front line while she learns spells." },
@@ -362,6 +365,109 @@ const strategy = {
     "Recruit join points and some ability names below come from general Final Fantasy Tactics / War of the Lions knowledge and aren't individually verified against The Ivalice Chronicles — confirm exact timing in-game.",
 };
 
+// How the deployed five evolves as recruits arrive. Shown in a top-level panel.
+// Lineups are suggested defaults, not hard rules — swap freely for your playstyle.
+const partyTimeline = [
+  {
+    phase: "Chapter 1 — the founders",
+    when: "Start of the game",
+    lineup: [
+      { name: "Ramza", role: "Leader / front-line" },
+      { name: "Orrick", role: "Healer (White Mage)" },
+      { name: "Margery", role: "Magick damage (Black Mage)" },
+      { name: "Esdeline", role: "Physical striker / thief" },
+      { name: "Felice", role: "5th slot — mage in training" },
+    ],
+    change:
+      "Your starting five. Felice is a long-term Arithmetician project and the weakest link for now — protect her while she banks spells. Steal the **Blood Sword** off Gaffgarion while you're here.",
+  },
+  {
+    phase: "Chapter 2 — royal guards arrive",
+    when: "Ch.2 (Ovelia / Goug)",
+    lineup: [
+      { name: "Ramza", role: "Leader / front-line" },
+      { name: "Orrick", role: "Healer" },
+      { name: "Margery", role: "Magick damage" },
+      { name: "Esdeline", role: "Physical / thief" },
+      { name: "Agrias", role: "5th slot — steps in for Felice", recruit: true },
+    ],
+    change:
+      "**Agrias** joins (guest, then permanent) and takes Felice's deployment slot while Felice keeps leveling in the background. **Mustadio** also joins as a ranged-control specialist you rotate in for specific fights — keep him around for the Goug sidequests.",
+  },
+  {
+    phase: "Chapter 3 — the party solidifies",
+    when: "Ch.3",
+    lineup: [
+      { name: "Ramza", role: "Leader / front-line" },
+      { name: "Orrick", role: "Healer" },
+      { name: "Margery", role: "Magick damage" },
+      { name: "Esdeline", role: "Physical / thief" },
+      { name: "Agrias", role: "5th slot (Felice returns once built)", recruit: true },
+    ],
+    change:
+      "No new permanent members, but this chapter holds the hardest solo fight: **Riovanes locks Ramza in alone** — build him to survive by himself before you enter. Felice can start seeing play as her spell list fills out.",
+  },
+  {
+    phase: "Chapter 4 — the powerhouses",
+    when: "Ch.4",
+    lineup: [
+      { name: "Ramza", role: "Leader / front-line" },
+      { name: "Orrick", role: "Healer" },
+      { name: "Orlandeau", role: "Physical powerhouse — takes Agrias's slot", recruit: true },
+      { name: "Margery / Felice", role: "Magick damage or Arithmeticks" },
+      { name: "Esdeline", role: "Physical / thief — steal Elmdore's Genji gear" },
+    ],
+    change:
+      "**Orlandeau** joins and outclasses your physical units, sliding into Agrias's slot. The **Beowulf & Reis** sidequest, the **Construct 8** build, and the very late **Cloud** unlock here too — all optional. By now Felice's Arithmeticks can rival Margery on the right maps, so rotate the magick slot to fit the fight.",
+  },
+];
+
+// Fights that call for a specific unit or setup. Shown in a top-level panel.
+const keyBattles = [
+  {
+    name: "Ch.1 — vs Gaffgarion",
+    goal: "Steal the Blood Sword",
+    bring: ["Esdeline (Steal)", "Ramza"],
+    note:
+      "Put **Steal** on Esdeline and take the **Blood Sword** before the fight ends — it drains HP on every hit and carries your early game.",
+  },
+  {
+    name: "Ch.3 — Riovanes Castle (Wiegraf → Velius)",
+    goal: "Survive a solo duel",
+    bring: ["Ramza — ALONE"],
+    note:
+      "Ramza fights this one **completely alone** — the rest of your party isn't deployed. Beforehand give him a strong weapon, heavy armour, a self-heal (Auto-Potion or Item) and Counter. Don't lean on your healers; they aren't in this battle.",
+  },
+  {
+    name: "Ch.3 — Riovanes rooftop (Celia & Lettie)",
+    goal: "Burst down the assassins",
+    bring: ["Esdeline (fast burst)", "Ramza", "Orrick (status protection)", "Margery (Golem)"],
+    note:
+      "The assassins inflict Death and Stop. Bring fast physical damage to delete them quickly, put status-blocking accessories on your casters, and consider benching fragile Felice for this one.",
+  },
+  {
+    name: "Ch.4 — vs Elmdore",
+    goal: "Steal the Genji gear",
+    bring: ["Esdeline (Steal)"],
+    note:
+      "Elmdore carries the **Genji set** but has Safeguard — strip Safeguard first, then steal each piece before the battle ends. Keep a dedicated thief in the party for this fight.",
+  },
+  {
+    name: "Ch.4 — Goland Coal City",
+    goal: "Recruit two units at once",
+    bring: ["Your strongest five"],
+    note:
+      "Clear this sidequest to recruit **both Beowulf and Reis**. *(Exact quest steps vary by version — confirm in-game.)*",
+  },
+  {
+    name: "Ch.4 — Goug machine city",
+    goal: "Unlock the machine units",
+    bring: ["Mustadio (required)"],
+    note:
+      "Keep **Mustadio** in your roster — he's the key to the Goug sidequests that build **Construct 8** and eventually lead to **Cloud**. *(Steps are general FFT knowledge — confirm in-game.)*",
+  },
+];
+
 // Optional special characters. Rendered as extra tabs after the core party.
 const recruits = [
   {
@@ -369,6 +475,12 @@ const recruits = [
     recruit: true,
     acquisition:
       "**Joins in Ch.2** — she guards Princess Ovelia as a guest, then becomes a permanent party member after the Chapter 2 (Lionel) events. One of your earliest and most reliable special units.",
+    replaces: {
+      who: "Felice",
+      slot: "5th / flex slot",
+      detail:
+        "While Felice is still an under-leveled Arithmetician project, Agrias is a far stronger fifth deployment — reliable front-line damage from the moment she joins. Rotate Felice back in once her spell list is built (or for maps where calculated spells shine).",
+    },
     meta: "Holy Knight · **Holy Sword** — ranged holy sword-waves",
     path: [{ label: "Holy Knight (fixed class)", now: true }],
     baseline:
@@ -384,6 +496,7 @@ const recruits = [
       "Give her the strongest Knight's Sword you can — Holy Sword damage scales with weapon power and her physical stats.",
       "She slots in as a second front-line bruiser next to Ramza; a physical support like Attack Boost suits her.",
       "Her skills are Holy-element: excellent versus undead, but anything that absorbs Holy will heal from them.",
+      "**Roster shift:** When **Orlandeau** joins in Ch.4 he outclasses her and usually takes her slot — keep Agrias as a second Holy Sword, or a deliberate challenge pick.",
     ],
     gear: [
       { name: "Save the Queen", type: "weapon", when: "Ch.4 (Beowulf sidequest)", note: "Knight's Sword granting permanent Protect — excellent on her." },
@@ -398,6 +511,12 @@ const recruits = [
     recruit: true,
     acquisition:
       "**Joins in Ch.2** after the events in the clockwork city of Goug. A long-range gunner whose shots disable enemies.",
+    replaces: {
+      who: "",
+      slot: "situational — ranged control",
+      detail:
+        "He doesn't push anyone out for good. Rotate him in over **Esdeline** (or the flex slot) for fights where disabling a boss at range beats melee theft — and keep him around permanently, since he's the key to the Goug machine sidequests.",
+    },
     meta: "Machinist · **Aim/Snipe** — status-inflicting gunshots",
     path: [{ label: "Machinist (fixed class)", now: true }],
     baseline:
@@ -423,6 +542,12 @@ const recruits = [
     recruit: true,
     acquisition:
       "**Joins in Ch.4.** Cidolfus Orlandeau — the 'Thunder God' — arrives with almost every sword skill in the game already learned, and is widely considered the strongest unit in FFT.",
+    replaces: {
+      who: "Agrias",
+      slot: "front-line physical",
+      detail:
+        "He does everything Agrias does — ranged Holy Sword — and adds HP/MP-draining Dark Sword, so he slides straight into her deployment slot. Keep Agrias only as a second Holy Sword, or bench Orlandeau on purpose if you want a harder game.",
+    },
     meta: "Sword Saint · **all sword skills** (Holy Sword + Dark Sword)",
     path: [{ label: "Sword Saint (fixed class)", now: true }],
     baseline:
@@ -450,6 +575,12 @@ const recruits = [
     recruit: true,
     acquisition:
       "**Joins in a Ch.4 sidequest** (the Goland Coal City questline, alongside Reis). A Temple Knight who inflicts status ailments with sword magick at range.",
+    replaces: {
+      who: "",
+      slot: "situational — status control",
+      detail:
+        "A flex control pick rather than a permanent starter. Swap him in over **Margery** on status-heavy maps where locking enemies down (Sleep, Confuse, Petrify) matters more than raw magick damage.",
+    },
     meta: "Temple Knight · **Magick Sword** — ranged status infliction",
     path: [{ label: "Temple Knight (fixed class)", now: true }],
     baseline:
@@ -474,6 +605,12 @@ const recruits = [
     recruit: true,
     acquisition:
       "**Joins from the same Ch.4 sidequest as Beowulf.** She starts as a Holy Dragon and becomes a human **Dragoner** once the questline completes.",
+    replaces: {
+      who: "",
+      slot: "additive — buffs / support",
+      detail:
+        "A bonus support unit; she doesn't replace a core member. Bring her for long attrition fights where Reraise and her stat buffs pay off over time.",
+    },
     meta: "Dragoner · dragon breath + party buffs",
     path: [{ label: "Holy Dragon → Dragoner (fixed)", now: true }],
     baseline:
@@ -494,6 +631,12 @@ const recruits = [
     recruit: true,
     acquisition:
       "**Built in the Ch.4 Goug sidequest** (needs Mustadio and the machine-city questline). A mechanical unit with high HP and heavy physical hits — also known as Worker 8.",
+    replaces: {
+      who: "",
+      slot: "additive — front-line tank",
+      detail:
+        "A bonus bruiser, strong the moment you build it. It can't grow, so bench it once late enemies outscale it — it isn't a permanent slot-holder.",
+    },
     meta: "Automaton · high HP, physical hits — immune to most status",
     path: [{ label: "Steel Giant (fixed — no jobs)", now: true }],
     baseline:
@@ -514,6 +657,12 @@ const recruits = [
     recruit: true,
     acquisition:
       "**Ch.4 hidden sidequest (very late, fully optional).** Finish the Goug machine questline, then buy a flower from the girl in **Zarghidas**; Cloud appears afterward. He needs the **Materia Blade** (found on a Ch.4 map) before his Limits are usable.",
+    replaces: {
+      who: "",
+      slot: "additive — bonus unit",
+      detail:
+        "He arrives so late he's a novelty pick, not a replacement. Field him for fun once he has the Materia Blade equipped.",
+    },
     meta: "Soldier · **Limit** — huge damage, long charge times",
     path: [{ label: "Soldier (fixed class)", now: true }],
     baseline:

@@ -211,6 +211,71 @@ function renderAcquisition(character) {
   return `<div class="acq-banner"><span class="acq-tag">Recruit</span><span class="acq-text">${formatText(character.acquisition)}</span></div>`;
 }
 
+function renderReplaces(character) {
+  const r = character.replaces;
+  if (!r) return "";
+  const who = r.who
+    ? `Steps into the party for <b>${escapeHtml(r.who)}</b>`
+    : "Additive unit — doesn't push anyone out";
+  return `<div class="replaces-line">
+      <span class="replaces-slot">${formatText(r.slot)}</span>
+      <span class="replaces-text">${who}. ${formatText(r.detail)}</span>
+    </div>`;
+}
+
+function renderPartyTimeline() {
+  if (typeof partyTimeline === "undefined") return "";
+  const phases = partyTimeline
+    .map((p) => {
+      const lineup = p.lineup
+        .map((u) => {
+          const rec = u.recruit ? " tl-recruit" : "";
+          return `<li class="tl-unit${rec}"><span class="tl-name">${escapeHtml(u.name)}</span><span class="tl-role">${formatText(u.role)}</span></li>`;
+        })
+        .join("\n          ");
+      return `<div class="tl-phase">
+        <div class="tl-phase-head"><span class="tl-when">${escapeHtml(p.when)}</span><h5>${escapeHtml(p.phase)}</h5></div>
+        <ul class="tl-lineup">
+          ${lineup}
+        </ul>
+        <p class="tl-change">${formatText(p.change)}</p>
+      </div>`;
+    })
+    .join("\n      ");
+  return collapsible(
+    "timeline-block",
+    "Party makeup over time",
+    "— how your deployed five evolves as recruits arrive",
+    phases,
+    false
+  );
+}
+
+function renderKeyBattles() {
+  if (typeof keyBattles === "undefined") return "";
+  const cards = keyBattles
+    .map((b) => {
+      const bring = (b.bring || [])
+        .map((u) => `<span class="kb-unit">${formatText(u)}</span>`)
+        .join("\n          ");
+      return `<div class="kb-card">
+        <div class="kb-head"><h5>${escapeHtml(b.name)}</h5><span class="kb-goal">${escapeHtml(b.goal)}</span></div>
+        <div class="kb-bring">
+          ${bring}
+        </div>
+        <p class="kb-note">${formatText(b.note)}</p>
+      </div>`;
+    })
+    .join("\n      ");
+  return collapsible(
+    "battles-block",
+    "Key battles — who to bring",
+    "— fights that call for a specific unit or setup",
+    cards,
+    false
+  );
+}
+
 function renderOverview() {
   if (typeof strategy === "undefined") return "";
   const s = strategy;
@@ -260,6 +325,7 @@ function renderCharacter(character, index) {
       <div class="char-meta">${formatText(character.meta)}</div>
     </div>
     ${renderAcquisition(character)}
+    ${renderReplaces(character)}
     <div class="path-strip">${renderPath(character.name, character.path)}</div>
     <div class="baseline-note">${formatText(character.baseline)}</div>
     <div class="char-progress">
@@ -411,6 +477,10 @@ function renderBoard() {
   document.getElementById("tabs").innerHTML = renderTabs();
   const overviewEl = document.getElementById("overview");
   if (overviewEl) overviewEl.innerHTML = renderOverview();
+  const timelineEl = document.getElementById("timeline");
+  if (timelineEl) timelineEl.innerHTML = renderPartyTimeline();
+  const battlesEl = document.getElementById("battles");
+  if (battlesEl) battlesEl.innerHTML = renderKeyBattles();
   document.getElementById("board").innerHTML = roster
     .map(renderCharacter)
     .join("\n\n  ");

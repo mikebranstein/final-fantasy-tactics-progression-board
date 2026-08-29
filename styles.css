@@ -693,4 +693,122 @@ footer{
 .ov-list li{ font-size: 12.5px; color: var(--parchment-dim); line-height:1.55; margin-bottom: 6px; }
 .ov-caveat{ margin-top: 14px; font-size: 11px; font-style: italic; color: var(--gold-soft); }
 
+/* ---------- Recruit "steps in for" line ---------- */
+.replaces-line{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  gap: 8px;
+  margin: 0 0 6px;
+  padding: 10px 14px;
+  background: rgba(79,179,169,0.06);
+  border-left: 2px solid var(--support);
+  border-radius: 0 8px 8px 0;
+}
+.replaces-slot{
+  flex-shrink:0;
+  font-family:'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--support);
+  border: 1px solid var(--support);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.replaces-text{ font-size: 12px; color: var(--parchment-dim); line-height:1.55; }
+.replaces-text b{ color: var(--parchment); }
+
+/* ---------- Party makeup timeline ---------- */
+#timeline{ margin: 0 0 30px; }
+.timeline-block{
+  padding: 16px 18px;
+  background: rgba(201,162,39,0.05);
+  border: 1px solid var(--panel-line);
+  border-left: 2px solid var(--support);
+  border-radius: 8px;
+}
+.tl-phase{
+  padding: 14px 0;
+  border-top: 1px solid var(--panel-line);
+}
+.tl-phase:first-child{ border-top:none; padding-top: 2px; }
+.tl-phase-head{ display:flex; align-items:baseline; gap: 10px; flex-wrap:wrap; margin-bottom: 10px; }
+.tl-phase-head h5{
+  margin:0;
+  font-family:'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.tl-when{
+  font-family:'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  border: 1px solid var(--panel-line);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.tl-lineup{ list-style:none; margin: 0 0 10px; padding: 0; display:grid; gap: 6px; }
+.tl-unit{
+  display:flex;
+  align-items:baseline;
+  gap: 10px;
+  padding: 7px 10px;
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  border-radius: 6px;
+}
+.tl-unit.tl-recruit{ border-style: dashed; border-color: var(--gold-soft); }
+.tl-name{ flex-shrink:0; min-width: 96px; font-size: 12.5px; font-weight:600; color: var(--parchment); }
+.tl-role{ font-size: 11.5px; color: var(--parchment-dim); line-height:1.4; }
+.tl-role b{ color: var(--parchment); }
+.tl-change{ margin: 0; font-size: 12px; color: var(--parchment-dim); line-height:1.6; }
+.tl-change b{ color: var(--parchment); }
+
+/* ---------- Key battles ---------- */
+#battles{ margin: 0 0 30px; }
+.battles-block{
+  padding: 16px 18px;
+  background: rgba(217,164,65,0.06);
+  border: 1px solid var(--panel-line);
+  border-left: 2px solid var(--reaction);
+  border-radius: 8px;
+}
+.kb-card{
+  padding: 14px 0;
+  border-top: 1px solid var(--panel-line);
+}
+.kb-card:first-child{ border-top:none; padding-top: 2px; }
+.kb-head{ display:flex; align-items:baseline; gap: 10px; flex-wrap:wrap; margin-bottom: 9px; }
+.kb-head h5{
+  margin:0;
+  font-family:'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--reaction);
+}
+.kb-goal{
+  font-size: 11px;
+  font-style: italic;
+  color: var(--gold-soft);
+}
+.kb-bring{ display:flex; flex-wrap:wrap; gap: 6px; margin-bottom: 9px; }
+.kb-unit{
+  font-family:'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  color: var(--parchment);
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.kb-note{ margin: 0; font-size: 12px; color: var(--parchment-dim); line-height:1.6; }
+.kb-note b{ color: var(--parchment); }
+
 
