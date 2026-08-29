@@ -60,6 +60,7 @@ const party = [
       { type: "action", job: "Samurai", skill: "Iaido: Masamune", note: "Grants Regen + Haste to nearby allies — top support Iaido" },
       { type: "action", job: "Samurai", skill: "Iaido: Chirijiraden", note: "Highest-damage Iaido (about 30x Magick Attack) — his ultimate nuke once JP allows" },
       { type: "reaction", job: "Samurai", skill: "Shirahadori", note: "TIC name for Blade Grasp — chance to negate physical attacks entirely; premier endgame reaction" },
+      { type: "support", job: "Black Mage", skill: "Magick Boost", note: "Iaido damage scales with Magick Attack, so a short Black Mage detour for Magick Boost raises his Samurai damage more than raw strength" },
       { type: "movement", job: "Thief / Time Mage", skill: "Move +2 / Teleport", note: "Thief grants Move +2 (Move +3 is Bard-only); Time Mage grants Teleport — the more practical pickup" },
     ],
     notes: [
@@ -74,9 +75,9 @@ const party = [
       "Movement: Teleport (Time Mage) is the practical pickup — Move +3 isn't available to him (it's Bard-only), so Thief's Move +2 is the physical alternative.",
     ],
     loadouts: [
-      { job: "Knight (early, Ch.1–2)", secondary: "Item (Chemist)", reaction: "Auto-Potion → Counter once learned", support: "Equip Armor", movement: "Move +1", why: "Durable frontliner while you bank Rend skills and JP." },
-      { job: "Monk (bridge)", secondary: "Battle Skill (Rend) or Item", reaction: "Counter", support: "Defense Boost (bank Brawler for later)", movement: "Move +1", why: "Grab Chakra + Counter; Monk levels also feed the Geomancer detour toward Samurai." },
-      { job: "Samurai (endgame)", secondary: "Battle Skill (Rend) or Item", reaction: "Shirahadori (or Counter)", support: "Magick Boost (from Black Mage) — powers Iaido; else Equip Armor for bulk", movement: "Move +2 (Thief) or Teleport (Time Mage)", why: "Iaido scales with Magick Attack, so Magick Boost out-damages raw strength; keep his best katana in inventory." },
+      { job: "Knight (early, Ch.1–2)", secondary: "Item (use Phoenix Down / Potions on the party)", reaction: "None yet — he learns Counter later, as a Monk", support: "JP Boost — helps him learn his Rend skills faster", movement: "Move +1", why: "A tough frontliner while you build up his Rend skills. Knights already wear heavy armour and carry shields on their own, so equipping Equip Armor would be wasted — use the support slot on JP Boost instead." },
+      { job: "Monk (bridge)", secondary: "Rend skills (kept from Knight) or Item", reaction: "Counter — the Monk reaction that hits back whenever he is physically attacked", support: "Brawler — raises his unarmed (Martial Arts) damage while he is a Monk", movement: "Move +1", why: "A short stop as a Monk to learn Counter and Chakra. Keep Counter equipped for the rest of the game." },
+      { job: "Samurai (endgame)", secondary: "Rend skills (kept from Knight) or Item", reaction: "Shirahadori — negates many physical hits; or fall back to Counter", support: "Magick Boost — Iaido scales with Magick Attack, so this adds more damage than raw strength", movement: "Move +2 (from Thief) or Teleport (from Time Mage)", why: "Keep his strongest katana in his inventory — Iaido consumes a katana from there, not the weapon he has equipped." },
     ],
     gear: [
       { name: "Blood Sword", type: "weapon", when: "Ch.1 — steal from Gaffgarion", note: "Drains HP equal to damage dealt — big early survivability." },
@@ -119,6 +120,7 @@ const party = [
       { type: "action", job: "White Mage", skill: "Regen", note: "Sustained per-turn healing that frees up his actions" },
       { type: "action", job: "White Mage", skill: "Holy", note: "White Mage's nuke (56 MP) — optional offense once heals are locked in" },
       { type: "action", job: "Time Mage", skill: "Haste (secondary)", note: "Layer Time Magic for self-sufficiency — Haste himself and allies" },
+      { type: "support", job: "Black Mage", skill: "Magick Boost", note: "+33% Magick Attack — also raises his healing, since Cure scales with Magick Attack; reachable on his Black Mage Lv.3 detour" },
       { type: "reaction", job: "White Mage", skill: "Regenerate", note: "White Mage reaction — applies Regen when he takes damage; strong self-sustain" },
       { type: "movement", job: "Time Mage", skill: "Teleport", note: "Reachable via Time Mage — ignores terrain to reposition; otherwise fall back to Move +2 (Thief)" },
     ],
@@ -131,9 +133,9 @@ const party = [
       "In TIC his best sustain reaction is **Regenerate** (White Mage); add **Magick Defense Boost** (White Mage support) if you want extra durability on your healer.",
     ],
     loadouts: [
-      { job: "Chemist (early)", secondary: "—", reaction: "Auto-Potion", support: "Equip Armor (if available)", movement: "Move +1", why: "Brief stop for Auto-Potion and item skills before White Mage opens." },
-      { job: "White Mage (core)", secondary: "Item (throw Potions/Phoenix Down if Silenced)", reaction: "Regenerate", support: "Magick Boost (heals +33%) or Magick Defense Boost", movement: "Move +1 → Teleport later", why: "Primary healer; Item is your fail-safe when Silenced." },
-      { job: "White Mage + Time Magic (endgame)", secondary: "Time Magick (self-Haste, Reflect)", reaction: "Regenerate", support: "Magick Boost", movement: "Teleport", why: "Self-Haste for more heal turns; Teleport reaches downed allies through terrain." },
+      { job: "Chemist (early)", secondary: "—", reaction: "Auto-Potion — automatically drinks a Potion when he takes damage", support: "JP Boost — helps him learn White Magic faster", movement: "Move +1", why: "A brief stop as a Chemist to pick up Auto-Potion before White Mage opens up." },
+      { job: "White Mage (core)", secondary: "Item (throw Potions / Phoenix Down if he is Silenced)", reaction: "Regenerate — applies Regen to him when he is hit", support: "Magick Boost — raises his healing, since his Cure line scales with Magick Attack", movement: "Move +1, then Teleport once he has it", why: "Your main healer. Item is the fail-safe so he can still revive people if Silence shuts off his spells." },
+      { job: "White Mage + Time Magic (endgame)", secondary: "Time Magick (cast Haste on himself for extra turns)", reaction: "Regenerate", support: "Magick Boost", movement: "Teleport — ignores terrain to reach downed allies", why: "Hasting himself gives more healing turns, and Teleport lets him reach anyone who goes down." },
     ],
     gear: [
       { name: "Healing Staff", type: "weapon", when: "mid game shops", note: "Attacking a wounded ally heals them — a free extra heal each turn." },
@@ -188,9 +190,9 @@ const party = [
       "Aspirational: **Zodiark** is the strongest summon but is learn-only — you must survive an enemy's Zodiark to acquire it, so treat it as a bonus, not a plan.",
     ],
     loadouts: [
-      { job: "Black Mage (early)", secondary: "Item", reaction: "Auto-Potion or Magick Counter", support: "Magick Boost", movement: "Move +1", why: "Raw elemental nuker; Magick Boost adds +33% damage right away." },
-      { job: "Time Mage phase", secondary: "Black Magick", reaction: "Magick Counter", support: "Swiftspell", movement: "Move +1 → Teleport", why: "Add turn control (Haste/Slow/Stop); Swiftspell trims long cast times." },
-      { job: "Summoner (endgame)", secondary: "Time Magick or Black Magick", reaction: "Critical: Recover MP", support: "Pick one: Halve MP (sustain) · Swiftspell (speed) · Magick Boost (damage)", movement: "Teleport", why: "Only one support slot — choose per fight; Golem/Carbuncle keep her alive while she chains summons." },
+      { job: "Black Mage (early)", secondary: "Item (heal / revive the party)", reaction: "None yet — she learns Critical: Recover MP later, as a Summoner", support: "Magick Boost — +33% to her spell and summon damage", movement: "Move +1", why: "A straight elemental nuker; Magick Boost raises her damage right away." },
+      { job: "Time Mage phase", secondary: "Black Magick (keep casting her elemental spells)", reaction: "None yet — Critical: Recover MP still comes from Summoner", support: "Swiftspell — shortens her spell and summon cast times", movement: "Move +1", why: "Adds turn control (Haste, Slow, Stop); Swiftspell means less waiting between casts." },
+      { job: "Summoner (endgame)", secondary: "Time Magick or Black Magick", reaction: "Critical: Recover MP — restores MP when she drops to critical HP", support: "Pick one: Halve MP (chain more summons), Swiftspell (cast sooner), or Magick Boost (hit harder)", movement: "Move +1", why: "You only get one support slot, so choose per fight. Golem and Carbuncle keep her alive while she chains summons." },
     ],
     gear: [
       { name: "Wizard Rod / Faith Rod", type: "weapon", when: "mid game", note: "Faith Rod raises Faith for more magick damage (but she also takes more — situational)." },
@@ -239,9 +241,9 @@ const party = [
       "For an evasion tank, stack **Reflexes** (Ninja) with a cloak; adding the Samurai's **Shirahadori** later makes her nearly untouchable, though that's a deep detour.",
     ],
     loadouts: [
-      { job: "Archer (early)", secondary: "Item", reaction: "Arrow Guard or Counter", support: "Concentration", movement: "Move +1", why: "Concentration makes every shot land; bank the Charge/Aim tiers." },
-      { job: "Thief phase", secondary: "Charge/Aim or Item", reaction: "Vigilance or Sticky Fingers", support: "Concentration", movement: "Move +2", why: "Speed + mobility for stealing and repositioning." },
-      { job: "Ninja (endgame)", secondary: "Battle Skill (Rend), Item, or Steal for utility", reaction: "Reflexes (later Shirahadori)", support: "Dual Wield", movement: "Move +2 (Thief) or Waterwalking", why: "One support slot: Dual Wield beats Concentration for raw output — her high Speed/Brave keeps hit rates up." },
+      { job: "Archer (early)", secondary: "Item", reaction: "None yet — she learns Vigilance later, as a Thief", support: "Concentration — makes her shots ignore evasion so they always land", movement: "Move +1", why: "Concentration guarantees hits while you build up her Charge/Aim skills." },
+      { job: "Thief phase", secondary: "Charge/Aim (kept from Archer) or Item", reaction: "Vigilance — takes a defensive stance when she loses HP", support: "Concentration", movement: "Move +2", why: "Speed and mobility for stealing and repositioning around the map." },
+      { job: "Ninja (endgame)", secondary: "Steal (kept from Thief) or Item", reaction: "Reflexes — doubles her evasion when she is targeted", support: "Dual Wield — a weapon in each hand for two attacks per turn", movement: "Move +2", why: "Dual Wield gives more raw damage than Concentration, and her high Speed and Brave keep her hit rate up without it." },
     ],
     gear: [
       { name: "Perseus Bow / Yoichi Bow", type: "weapon", when: "Ch.4 (treasure/steal)", note: "Best bows for her Archer phase — two-hand them for big ranged damage." },
@@ -283,6 +285,7 @@ const party = [
       { type: "action", job: "Time Mage", skill: "Haste", note: "Mass-Haste allies in one Arithmeticks cast — learn before Arithmetician" },
       { type: "action", job: "Time Mage", skill: "Immobilize", note: "Time Magick lockdown — freezes movement on every matching enemy via Arithmeticks" },
       { type: "action", job: "Mystic", skill: "Mystic Arts: Quiescence / Repose / Induration", note: "TIC status spells — Silence, Sleep and Petrify — for wide Arithmeticks status sweeps" },
+      { type: "support", job: "Black Mage", skill: "Magick Boost", note: "+33% magick damage — boosts her spells and, later, her Arithmeticks output; picked up during her Black Mage Lv.5 push" },
       { type: "action", job: "Arithmetician", skill: "Arithmeticks", note: "The payoff — learn the CT / Level / Height / Prime / Multiple algorithms to fire any known spell for free, with no charge time" },
     ],
     notes: [
@@ -295,8 +298,8 @@ const party = [
       "Note: Arithmeticks fires spells with **no MP cost and no charge time**, but hits every unit (allies included) matching the chosen algorithm — watch friendly fire, or use element-absorbing gear to turn it into healing.",
     ],
     loadouts: [
-      { job: "Mage grind (WM/BM/TM/Mystic)", secondary: "A second magick set so she keeps casting while leveling", reaction: "Auto-Potion or Mana Shield", support: "Magick Boost", movement: "Move +1", why: "She's fragile for a long time — keep Item/Auto-Potion and stay behind the line while banking spells." },
-      { job: "Arithmetician (endgame — best setup)", secondary: "Run Arithmeticks as a SECONDARY on a Black Mage body (max damage) or White Mage body (max speed)", reaction: "Critical: Quick or Mana Shield", support: "Magick Boost", movement: "Teleport", why: "The Arithmetician job has the lowest magic and speed in the game — equip Arithmeticks on a stronger mage instead of staying the base job." },
+      { job: "Mage grind (WM/BM/TM/Mystic)", secondary: "Whichever magick set she isn't currently in, so she keeps casting while leveling", reaction: "Auto-Potion — automatically drinks a Potion when she takes damage", support: "Magick Boost — +33% magick damage, which later boosts her Arithmeticks spells too", movement: "Move +1", why: "She is fragile for a long time, so keep Auto-Potion on and keep her behind the front line while she learns spells." },
+      { job: "Arithmetician (endgame — best setup)", secondary: "Put Arithmeticks on a Black Mage body (most damage) or White Mage body (most speed) instead of staying the base job", reaction: "Auto-Potion", support: "Magick Boost", movement: "Move +1", why: "The Arithmetician job itself has the lowest magick and speed in the game, so run Arithmeticks as a secondary command on a stronger mage." },
     ],
     gear: [
       { name: "Monster Dictionary / Papyrus Plate (Books)", type: "weapon", when: "mid–late game", note: "Arithmetician weapons; books strike two tiles in a row." },
