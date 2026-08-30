@@ -33,11 +33,12 @@ const types = {
 const party = [
   {
     name: "Ramza",
-    meta: "Squire → Knight → Monk → **Samurai** (endgame) · Level 6",
+    meta: "Squire → Knight → Monk → **Samurai** (endgame, via a Dragoon Lv.2 gate) · Level 6",
     path: [
       { label: "Squire (Lv.2 → Knight)" },
       { label: "Knight → Lv.4", now: true },
       { label: "Monk → Lv.5" },
+      { label: "Dragoon → Lv.2 (Samurai gate)" },
       { label: "Samurai (endgame)" },
     ],
     baseline: "**Baseline assumed:** Move +1 and JP Boost already learned on Squire.",
@@ -55,6 +56,8 @@ const party = [
       { type: "action", job: "Monk", skill: "Chakra", note: "Bridge job — restores HP/MP to self and adjacent allies with no MP cost" },
       { type: "reaction", job: "Monk", skill: "Counter", note: "Signature reaction — strikes back when hit; keep equipped into endgame" },
       { type: "support", job: "Monk", skill: "Brawler", note: "TIC unarmed-damage passive (the skillset is Martial Arts, the support ability is Brawler) — banks Monk JP" },
+      { type: "action", job: "Dragoon", skill: "Level Jump2", note: "Cheap Jump-range upgrade that banks the JP toward Dragoon (Lancer) Lv.2 — the Samurai gate. Jump needs no weapon, so it's a handy ranged poke; confirm the exact name in TIC" },
+      { type: "support", job: "Dragoon", skill: "Equip Spear", note: "Optional Dragoon support that lets other jobs wield spears — NOT core to his Magick-Attack Iaido build; grab it only for the option while clearing the Lv.2 gate" },
       { type: "action", job: "Samurai", skill: "Iaido: Ashura", note: "First Iaido technique — Iaido damage scales with Magick Attack; a katana only needs to be in his inventory" },
       { type: "action", job: "Samurai", skill: "Iaido: Kiku-ichimonji", note: "Range-4 line-piercing Iaido — hits multiple enemies in a row; his signature damage" },
       { type: "action", job: "Samurai", skill: "Iaido: Masamune", note: "Grants Regen + Haste to nearby allies — top support Iaido" },
@@ -64,8 +67,8 @@ const party = [
       { type: "movement", job: "Thief / Time Mage", skill: "Move +2 / Teleport", note: "Thief grants Move +2 (Move +3 is Bard-only); Time Mage grants Teleport — the more practical pickup" },
     ],
     notes: [
-      "**Job-level gates:** Knight → Lv.3 unlocks Monk; keep Knight to Lv.4 for Samurai. Monk → Lv.5, then Samurai unlocks at Knight Lv.4 + Monk Lv.5 + Dragoon Lv.2 — don't leave a job until you hit its target level.",
-      "Samurai's Dragoon Lv.2 requirement is a side-detour: Archer Lv.3 → Thief Lv.4 → Dragoon Lv.2. Bank that JP before expecting Samurai to open.",
+      "**Job-level gates:** Knight → Lv.3 unlocks Monk; keep Knight to Lv.4 for Samurai. Monk → Lv.5, then Samurai unlocks at Knight Lv.4 + Monk Lv.5 + Dragoon (Lancer) Lv.2 — don't leave a job until you hit its target level.",
+      "**The Dragoon gate:** Samurai needs Dragoon (Lancer) Lv.2, so budget a real detour — Archer Lv.3 → Thief Lv.4 opens Dragoon, then grind it to Lv.2. It's only a little JP: pick up **Level Jump2** (cheap, needs no weapon) on the way, and optionally **Equip Spear**. None of it feeds his Iaido endgame — it's purely to open Samurai, so don't over-invest.",
       "Secondary skillset: keep Item equipped until magic cross-skills are further along elsewhere.",
       "Reaction: start banking JP toward Counter once available.",
       "Rend Accessory and Rend Mind/Magic are lowest priority — save for later.",
