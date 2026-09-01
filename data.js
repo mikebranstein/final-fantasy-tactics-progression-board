@@ -33,11 +33,12 @@ const types = {
 const party = [
   {
     name: "Ramza",
-    meta: "Squire → Knight → Monk → **Samurai** (endgame, via a Dragoon Lv.2 gate) · Level 6",
+    meta: "Squire → Knight → Monk → **Samurai** (endgame, via a Thief Lv.4 → Dragoon Lv.2 gate) · Level 6",
     path: [
       { label: "Squire (Lv.2 → Knight)" },
       { label: "Knight → Lv.4", now: true },
       { label: "Monk → Lv.5" },
+      { label: "Thief → Lv.4 (Dragoon gate)" },
       { label: "Dragoon → Lv.2 (Samurai gate)" },
       { label: "Samurai (endgame)" },
     ],
@@ -56,6 +57,8 @@ const party = [
       { type: "action", job: "Monk", skill: "Chakra", note: "Bridge job — restores HP/MP to self and adjacent allies with no MP cost" },
       { type: "reaction", job: "Monk", skill: "Counter", note: "Signature reaction — strikes back when hit; keep equipped into endgame" },
       { type: "support", job: "Monk", skill: "Brawler", note: "TIC unarmed-damage passive (the skillset is Martial Arts, the support ability is Brawler) — banks Monk JP" },
+      { type: "action", job: "Thief", skill: "Steal Heart", note: "Cheap, no-weapon Thief command that charms an enemy — handy CC to grab while you grind Thief toward Lv.4, the confirmed Dragoon unlock. Confirm the exact name in TIC." },
+      { type: "action", job: "Thief", skill: "Steal Weapon", note: "Disarms a dangerous enemy — a useful optional pickup during the Thief pass; his lasting keeper here is Move +2 (see his movement tile). Confirm the exact name in TIC." },
       { type: "action", job: "Dragoon", skill: "Level Jump2", note: "Cheap Jump-range upgrade that banks the JP toward Dragoon (Lancer) Lv.2 — the Samurai gate. Jump needs no weapon, so it's a handy ranged poke; confirm the exact name in TIC" },
       { type: "support", job: "Dragoon", skill: "Equip Spear", note: "Optional Dragoon support that lets other jobs wield spears — NOT core to his Magick-Attack Iaido build; grab it only for the option while clearing the Lv.2 gate" },
       { type: "action", job: "Samurai", skill: "Iaido: Ashura", note: "First Iaido technique — Iaido damage scales with Magick Attack; a katana only needs to be in his inventory" },
@@ -64,11 +67,11 @@ const party = [
       { type: "action", job: "Samurai", skill: "Iaido: Chirijiraden", note: "Highest-damage Iaido (about 30x Magick Attack) — his ultimate nuke once JP allows" },
       { type: "reaction", job: "Samurai", skill: "Shirahadori", note: "TIC name for Blade Grasp — chance to negate physical attacks entirely; premier endgame reaction" },
       { type: "support", job: "Black Mage", skill: "Magick Boost", note: "Iaido damage scales with Magick Attack, so a short Black Mage detour for Magick Boost raises his Samurai damage more than raw strength" },
-      { type: "movement", job: "Thief / Time Mage", skill: "Move +2 / Teleport", note: "Thief grants Move +2 (Move +3 is Bard-only); Time Mage grants Teleport — the more practical pickup" },
+      { type: "movement", job: "Thief / Time Mage", skill: "Move +2 / Teleport", note: "He already visits Thief for the Dragoon gate (Thief Lv.4), so Move +2 is a free keeper (Move +3 is Bard-only); Time Mage grants Teleport — the more practical pickup" },
     ],
     notes: [
-      "**Job-level gates:** Knight → Lv.3 unlocks Monk; keep Knight to Lv.4 for Samurai. Monk → Lv.5, then Samurai unlocks at Knight Lv.4 + Monk Lv.5 + Dragoon (Lancer) Lv.2 — don't leave a job until you hit its target level.",
-      "**The Dragoon gate:** Samurai needs Dragoon (Lancer) Lv.2, so budget a real detour — Archer Lv.3 → Thief Lv.4 opens Dragoon, then grind it to Lv.2. It's only a little JP: pick up **Level Jump2** (cheap, needs no weapon) on the way, and optionally **Equip Spear**. None of it feeds his Iaido endgame — it's purely to open Samurai, so don't over-invest.",
+      "**Job-level gates:** Knight → Lv.3 unlocks Monk; keep Knight to Lv.4 for Samurai. Monk → Lv.5. Dragoon (Lancer) unlocks at **Thief Lv.4** (confirmed), then grind Dragoon to Lv.2; Samurai finally unlocks at Knight Lv.4 + Monk Lv.5 + Dragoon Lv.2 — don't leave a job until you hit its target level.",
+      "**The Thief → Dragoon gate:** Samurai needs Dragoon (Lancer) Lv.2, and Dragoon itself unlocks at **Thief Lv.4** (confirmed) — so budget a real detour: take Thief to Lv.4 (Thief opens from Archer), then grind Dragoon to Lv.2. It's only a little JP: while in Thief, bank **Move +2** (a permanent keeper) and optionally **Steal Heart**; in Dragoon, pick up **Level Jump2** (cheap, needs no weapon) and optionally **Equip Spear**. None of it feeds his Iaido endgame — it's purely to open Samurai, so don't over-invest.",
       "Secondary skillset: keep Item equipped until magic cross-skills are further along elsewhere.",
       "Reaction: start banking JP toward Counter once available.",
       "Rend Accessory and Rend Mind/Magic are lowest priority — save for later.",
@@ -80,6 +83,7 @@ const party = [
     loadouts: [
       { job: "Knight (early, Ch.1–2)", secondary: "Item (use Phoenix Down / Potions on the party)", reaction: "None yet — he learns Counter later, as a Monk", support: "JP Boost — helps him learn his Rend skills faster", movement: "Move +1", why: "A tough frontliner while you build up his Rend skills. Knights already wear heavy armour and carry shields on their own, so equipping Equip Armor would be wasted — use the support slot on JP Boost instead." },
       { job: "Monk (bridge)", secondary: "Rend skills (kept from Knight) or Item", reaction: "Counter — the Monk reaction that hits back whenever he is physically attacked", support: "Brawler — raises his unarmed (Martial Arts) damage while he is a Monk", movement: "Move +1", why: "A short stop as a Monk to learn Counter and Chakra. Keep Counter equipped for the rest of the game." },
+      { job: "Thief (Lv.4 gate)", secondary: "Rend skills (kept from Knight) or Item — his own command here is Steal", reaction: "Counter — kept from Monk so he still punishes attackers", support: "JP Boost — the fastest way to reach Thief Lv.4, the confirmed Dragoon unlock", movement: "Move +1 → learn Move +2 here and keep it for good", why: "Thief Lv.4 is the confirmed unlock for Dragoon, so this is the first half of the Samurai gate. Grab Move +2 while you're here — it's the one Thief pickup that stays useful on his endgame Samurai — then move into Dragoon. Steal Heart is a nice optional CC, but don't over-invest; this pass is just for the gate." },
       { job: "Dragoon (Lv.2 gate)", secondary: "Rend skills (kept from Knight) or Item — his own command here is Jump", reaction: "Counter — kept from Monk so he still punishes attackers", support: "JP Boost — the fastest way through the gate; swap to Equip Spear only if you want a spear on him", movement: "Move +1", why: "A brief pass purely to reach Dragoon (Lancer) Lv.2 and open Samurai. Give him a familiar secondary and Counter so he stays useful while you bank the JP — this isn't a combat identity, so don't over-equip it." },
       { job: "Samurai (endgame)", secondary: "Rend skills (kept from Knight) or Item", reaction: "Shirahadori — negates many physical hits; or fall back to Counter", support: "Magick Boost — Iaido scales with Magick Attack, so this adds more damage than raw strength", movement: "Move +2 (from Thief) or Teleport (from Time Mage)", why: "Keep his strongest katana in his inventory — Iaido consumes a katana from there, not the weapon he has equipped." },
     ],
