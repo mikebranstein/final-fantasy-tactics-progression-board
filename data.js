@@ -90,7 +90,7 @@ const party = [
       { job: "Samurai (endgame)", secondary: "Rend skills (kept from Knight) or Item", reaction: "Shirahadori — negates many physical hits; or fall back to Counter", support: "Magick Boost — Iaido scales with Magick Attack, so this adds more damage than raw strength", movement: "Move +2 (from Thief) or Teleport (from Time Mage)", why: "Keep his strongest katana in his inventory — Iaido consumes a katana from there, not the weapon he has equipped." },
     ],
     gear: [
-      { name: "Blood Sword", type: "weapon", when: "Ch.1 — steal from Gaffgarion", note: "Drains HP equal to damage dealt — big early survivability." },
+      { name: "Blood Sword", type: "weapon", when: "Ch.2 — steal from Gaffgarion at Golgollada Gallows", note: "Drains HP equal to damage dealt — big early survivability. Earliest source in the game; he only carries it at the Golgollada Gallows fight (not the earlier Zeirchele Falls betrayal or the later Lionel Castle duel)." },
       { name: "Save the Queen", type: "weapon", when: "Ch.4 — Beowulf sidequest", note: "Knight's sword that grants permanent Protect." },
       { name: "Ragnarok / Excalibur", type: "weapon", when: "Ch.4", note: "Top knight's swords; Excalibur grants permanent Haste (needs Equip Sword on a Samurai)." },
       { name: "Masamune", type: "weapon", when: "Ch.3–4 (poach/treasure)", note: "Best all-round katana — also a strong Draw Out (Regen + Haste)." },
@@ -103,7 +103,7 @@ const party = [
     storyWarnings: [
       { when: "End of Ch.3 — Riovanes Castle (the Wiegraf duel)", note: "Ramza fights Wiegraf, then the demon Velius, **completely alone**. Before you enter, make sure he can survive solo: a strong weapon, heavy armour, a self-heal (Auto-Potion or Item), and Counter. Don't build the fight around your healers — they aren't there." },
       { when: "Ch.3 — Riovanes rooftop", note: "Right after the duel, the assassins Celia and Lettie can inflict Death, Stop and other nasty status. Bring status protection and burst them down quickly." },
-      { when: "Ch.1 — vs Gaffgarion", note: "You can **steal the Blood Sword** from Gaffgarion here — a big early survivability boost, since it drains HP with every hit." },
+      { when: "Ch.2 — Golgollada Gallows (vs Gaffgarion)", note: "Gaffgarion is your guest ally in Ch.1, then betrays you in Ch.2 and is fought three times — but he only carries the **Blood Sword** at the **Golgollada Gallows** fight. **Steal it there** (not at Zeirchele Falls or Lionel Castle) for a big early survivability boost, since it drains HP with every hit." },
     ],
   },
   {
@@ -399,7 +399,7 @@ const partyTimeline = [
       { name: "Felice", role: "5th slot — mage in training" },
     ],
     change:
-      "Your starting five. Felice is a long-term Arithmetician project and the weakest link for now — protect her while she banks spells. Steal the **Blood Sword** off Gaffgarion while you're here.",
+      "Your starting five. Felice is a long-term Arithmetician project and the weakest link for now — protect her while she banks spells.",
   },
   {
     phase: "Chapter 2 — royal guards arrive",
@@ -412,7 +412,7 @@ const partyTimeline = [
       { name: "Agrias", role: "5th slot — steps in for Felice", recruit: true },
     ],
     change:
-      "**Agrias** joins (guest, then permanent) and takes Felice's deployment slot while Felice keeps leveling in the background. **Mustadio** also joins as a ranged-control specialist you rotate in for specific fights — keep him around for the Goug sidequests.",
+      "**Agrias** joins (guest, then permanent) and takes Felice's deployment slot while Felice keeps leveling in the background. **Mustadio** also joins as a ranged-control specialist you rotate in for specific fights — keep him around for the Goug sidequests. When Gaffgarion turns on you, **steal his Blood Sword at the Golgollada Gallows fight** — the earliest HP-draining weapon in the game.",
   },
   {
     phase: "Chapter 3 — the party solidifies",
@@ -445,11 +445,11 @@ const partyTimeline = [
 // Fights that call for a specific unit or setup. Shown in a top-level panel.
 const keyBattles = [
   {
-    name: "Ch.1 — vs Gaffgarion",
+    name: "Ch.2 — Golgollada Gallows (vs Gaffgarion)",
     goal: "Steal the Blood Sword",
     bring: ["Esdeline (Steal)", "Ramza"],
     note:
-      "Put **Steal** on Esdeline and take the **Blood Sword** before the fight ends — it drains HP on every hit and carries your early game.",
+      "Gaffgarion betrays you in Ch.2 and is fought three times — but he only carries the **Blood Sword** at **Golgollada Gallows**. Put **Steal** on Esdeline and take it there before the fight ends — it drains HP on every hit and carries your early game.",
   },
   {
     name: "Ch.3 — Riovanes Castle (Wiegraf → Velius)",
@@ -492,17 +492,12 @@ const keyBattles = [
 // Each item is checkable; exact timing varies by version — confirm in-game.
 const missables = [
   {
-    chapter: "Chapter 1",
-    items: [
-      {
-        label: "Steal the Blood Sword from Gaffgarion",
-        note: "Drains HP equal to damage dealt — a huge early survivability boost. Put **Steal** on a Thief and take it before the fight ends.",
-      },
-    ],
-  },
-  {
     chapter: "Chapters 2–3",
     items: [
+      {
+        label: "Steal the Blood Sword from Gaffgarion (Golgollada Gallows)",
+        note: "The earliest HP-draining weapon — he only carries it at the **Golgollada Gallows** fight in Ch.2 (not Zeirchele Falls or Lionel Castle). Put **Steal** on a Thief and take it before the fight ends.",
+      },
       {
         label: "Keep Mustadio in your roster",
         note: "He's the key to the Ch.4 Goug machine sidequests (**Construct 8**, and eventually **Cloud**) — don't dismiss him.",
